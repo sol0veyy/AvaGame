@@ -11,7 +11,7 @@ class AvatarController {
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
             const avatar = await Avatar.create({userId, categoryId, tags, img: fileName})
-
+            const avatarModeration = await AvatarModeration.create({avatarId: avatar.id})
             if (tags) {
                 tags = JSON.parse(tags)
                 tags.forEach(i => {
