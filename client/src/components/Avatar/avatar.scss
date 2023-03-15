@@ -1,0 +1,66 @@
+.avatarBlock {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.avatarBlock img {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    z-index: 1;
+}
+
+.avatarBlock:hover {
+    .heart {
+        visibility: visible;
+    }
+
+    img {
+        filter: brightness(40%);
+    }
+}
+
+.heart {
+    visibility: hidden;
+    background-color: white;
+    height: 20px;
+    position: relative;
+    bottom: 35px;
+    transform: rotate(-45deg);
+    width: 20px;
+    z-index: 10;
+}
+
+.heartRed {
+    background-color: red;
+}
+
+.heart.heartRed::before,
+.heart.heartRed::after {
+    content: "";
+    background-color: red;
+}
+
+.heart:before,
+.heart:after {
+    content: "";
+    background-color: white;
+    border-radius: 50%;
+    height: 20px;
+    position: absolute;
+    width: 20px;
+}
+
+.heart:before {
+    top: -10px;
+    left: 0;
+}
+
+.heart:after {
+    left: 10px;
+    top: 0;
+}
