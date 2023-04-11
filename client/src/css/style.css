@@ -17,9 +17,9 @@ body {
 }
 
 header {
-    height: 100px;
+    height: 160px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .logo {
@@ -28,8 +28,6 @@ header {
 }
 
 .main-content {
-    margin-top: 40px;
-    height: calc(100vh - 140px);
     display: grid;
     grid-template-columns: 4fr 1fr;
     justify-content: right;

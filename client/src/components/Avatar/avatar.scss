@@ -6,10 +6,10 @@
     align-items: center;
 }
 
-.avatarBlock img {
+.picture {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     border: 1px solid black;
     z-index: 1;
 }
@@ -19,20 +19,25 @@
         visibility: visible;
     }
 
-    img {
+    .download {
+        visibility: visible;
+    }
+
+    .picture {
         filter: brightness(40%);
     }
 }
 
 .heart {
     visibility: hidden;
-    background-color: white;
+    background-color: #898989;
     height: 20px;
     position: relative;
     bottom: 35px;
     transform: rotate(-45deg);
     width: 20px;
     z-index: 10;
+    cursor: pointer;
 }
 
 .heartRed {
@@ -48,7 +53,7 @@
 .heart:before,
 .heart:after {
     content: "";
-    background-color: white;
+    background-color: #898989;
     border-radius: 50%;
     height: 20px;
     position: absolute;
@@ -63,4 +68,18 @@
 .heart:after {
     left: 10px;
     top: 0;
+}
+
+.download {
+    cursor: pointer;
+    visibility: hidden;
+    position: relative;
+    bottom: 65px;
+    left: 55px;
+    z-index: 10;
+}
+
+.download img {
+    width: 35px;
+    height: 35px;
 }

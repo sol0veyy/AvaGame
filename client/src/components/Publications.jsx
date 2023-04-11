@@ -2,10 +2,10 @@ import React from "react";
 import Avatars from "./Avatars/Avatars";
 import "../css/style.css"
 
-const Publications = () => {
+const Publications = ({place}) => {
     return (
         <div className="publications">
-            <Avatars />
+            <Avatars place={place} />
         </div>
     )
 }

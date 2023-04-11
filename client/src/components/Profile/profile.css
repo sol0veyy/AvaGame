@@ -1,0 +1,40 @@
+.profileInfo {
+    display: flex;
+    flex-flow: column;
+    padding: 40px;
+}
+
+.infoBlock {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.profileInfo img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.nickname {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.col-avatar {
+    color: #777;
+}
+
+.infoBlock button {
+    cursor: pointer;
+    width: 300px;
+    padding: 10px;
+    background-color: #287DFC;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 45px;
+    margin-top: 5px;
+}

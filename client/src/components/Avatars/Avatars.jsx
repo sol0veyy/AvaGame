@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Avatar from "../Avatar/Avatar";
 import "./avatars.css"
 
-const Avatars = () => {
+const Avatars = ({place}) => {
     const [avatars, setAvatars] = useState([
         {
             id: 0,
@@ -49,7 +49,7 @@ const Avatars = () => {
     }
 
     return (
-        <div className="avatarsBlock">
+        <div className={`avatarsBlock ${place==="profile" ? 'avatarsBlockProfile' : ''}`}>
             {avatars.map(avatar => 
                 <Avatar avatar={avatar} clickHeart={clickHeart} key={avatar.id} />
             )}
