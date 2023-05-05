@@ -45,11 +45,6 @@ const AvatarTag = sequelize.define('avatar_tag', {
     // avatar_id
 })
 
-const AvatarModeration = sequelize.define('avatar_moderation', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
-    // avatar_id
-})
-
 const AvatarPublished = sequelize.define('avatar_published', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     date: {type: DataTypes.DATE, defaultValue: DataTypes.NOW},
@@ -81,9 +76,6 @@ Avatar.belongsTo(Category)
 Avatar.hasMany(AvatarTag, {as: 'tags'})
 AvatarTag.belongsTo(Avatar)
 
-Avatar.hasOne(AvatarModeration)
-AvatarModeration.belongsTo(Avatar)
-
 Avatar.hasOne(AvatarPublished)
 AvatarPublished.belongsTo(Avatar)
 
@@ -95,6 +87,5 @@ module.exports = {
     Avatar,
     Category,
     AvatarTag,
-    AvatarModeration,
     AvatarPublished
 }

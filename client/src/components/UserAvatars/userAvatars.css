@@ -1,0 +1,8 @@
+.avatarsBlockProfile {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: repeat(auto-fit, 200px);
+    justify-content: center;
+    gap: 20px;
+}

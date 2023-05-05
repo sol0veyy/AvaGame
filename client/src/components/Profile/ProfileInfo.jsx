@@ -1,22 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./profile.css";
-import avatar from "../../img/ava.jpg";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
+import { Context } from "../..";
+import jwt_decode from 'jwt-decode'
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ setUploadActive, setSettingsActive }) => {
     const navigate = useNavigate();
+    const {user} = useContext(Context);
+    const infoUser = jwt_decode(localStorage.getItem('token'))
+
+    const logOut = () => {
+        user.setUser({})
+        user.setIsAuth(false)
+        navigate(LOGIN_ROUTE)
+    }
 
     return (
         <div className="profileInfo">
             <div className="infoBlock">
-                    <img src={avatar} alt="avatar" />
-                    <span className="nickname">sol0vey</span>
-                    <span className="col-avatar">40 опубликованных аватарок</span>
+                    <img 
+                        src={infoUser.img ? process.env.REACT_APP_API_URL + infoUser.img : `nonAvatar.jpg`}
+                        className="avatar"
+                        alt="avatar"    
+                    />
+                    <span className="nickname">{infoUser.login}</span>
+                    <span className="col-avatar">{infoUser.publications} опубликованных аватарок</span>
                     <button className="backMain" onClick={() => navigate(MAIN_ROUTE)}>Главная</button>
-                    <button className="uploadAva">Опубликовать аватарку</button>
-                    <button>Изменить профиль</button>
-                    <button onClick={() => navigate(LOGIN_ROUTE)}>Выйти с аккаунта</button>
+                    <button
+                        onClick={() => setUploadActive(true)}
+                    >
+                        Опубликовать аватарку
+                    </button>
+                    <button
+                        onClick={() => setSettingsActive(true)}
+                    >
+                        Настройки профиля
+                    </button>
+                    <button onClick={() => logOut()}>Выйти с аккаунта</button>
             </div>
         </div>
     )

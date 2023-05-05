@@ -1,60 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Avatar from "../Avatar/Avatar";
 import "./avatars.css"
+import { getAll } from "../../http/avatarsAPI";
+import { observer } from "mobx-react-lite";
+import { Context } from "../..";
+import { toJS } from "mobx";
 
-const Avatars = ({place}) => {
-    const [avatars, setAvatars] = useState([
-        {
-            id: 0,
-            like: false
-        },
-        {
-            id: 1,
-            like: false
-        },        {
-            id: 2,
-            like: false
-        },        {
-            id: 3,
-            like: false
-        },        {
-            id: 4,
-            like: false
-        },        {
-            id: 5,
-            like: false
-        },        {
-            id: 6,
-            like: false
-        },        {
-            id: 7,
-            like: false
-        },        {
-            id: 8,
-            like: false
-        },        {
-            id: 9,
-            like: false
-        },
-    ])
-
-    const clickHeart = (avatar) => {
-        setAvatars(prevState =>
-            prevState.map(item =>
-                item.id === avatar.id
-                ? avatar.like ? {...item, like: false} : {...item, like: true}
-                : item
-            )
-        )
-    }
+const Avatars = observer(() => {
+    const {avatar} = useContext(Context)
+    
+    useEffect(() => {
+        getAll().then(data => avatar.setAvatars(data));
+    }, [avatar])
+    
+    const allAvatars = toJS(avatar.avatars);
 
     return (
-        <div className={`avatarsBlock ${place==="profile" ? 'avatarsBlockProfile' : ''}`}>
-            {avatars.map(avatar => 
-                <Avatar avatar={avatar} clickHeart={clickHeart} key={avatar.id} />
+        <div className="avatarsBlock">
+            {allAvatars.map(avatar => 
+                <Avatar 
+                    avatar={avatar}
+                    key={avatar.id}
+                />
             )}
         </div>
     )
-}
+});
 
 export default Avatars;

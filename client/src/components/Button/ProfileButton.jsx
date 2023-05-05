@@ -1,23 +1,25 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Context } from "../..";
-import ava from "../../img/ava.jpg"
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
 import "./button.css"
+import jwt_decode from "jwt-decode"
 
 const ProfileButton = () => {
     const { user } = useContext(Context)
+
+    const infoUser = jwt_decode(localStorage.getItem('token'))
 
     return (
         <div className="buttonsRight">
             {user.isAuth ?
                 <div className="blockRightProfile">
                     <NavLink to={PROFILE_ROUTE}>
-                        <img src={ava} alt="profile" />
+                        <img src={infoUser.img ? process.env.REACT_APP_API_URL + infoUser.img : "nonAvatar.jpg"} alt="profile" />
                     </NavLink>
                     <div className="info">
-                        <span className="login">sol0vey</span>
-                        <span className="colAvatar">40 аватарок</span>
+                        <span className="login">{infoUser.login}</span>
+                        <span className="colAvatar">{infoUser.publications} аватарок</span>
                     </div>
                 </div>
                 :

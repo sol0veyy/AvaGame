@@ -6,7 +6,6 @@ import { MAIN_ROUTE } from "../utils/consts";
 
 const AppRouter = () => {
     const {user} = useContext(Context)
-    console.log(user)
     
     return (
         <Routes>
