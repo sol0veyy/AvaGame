@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
 import { createAvatar } from "../../http/avatarsAPI";
 import Modal from "./Modal";
+import { Context } from '../..';
 
-const ModalUploadAvatar = ({modalActive, setModalActive}) => {
+const ModalUploadAvatar = ({ setColAvatars, modalActive, setModalActive}) => {
     const infoUser = jwt_decode(localStorage.getItem('token'))
-
+    const {avatar} = useContext(Context);
     const [imgUrl, setImgUrl] = useState("");
     const [sizeImg, setSizeImg] = useState("");
     const [errorImg, setErrorImg] = useState("");
+    const [tags, setTags] = useState("");
 
     const [viewImg, setViewImg] = useState(false);
     const [file, setFile] = useState(null);
@@ -36,14 +38,20 @@ const ModalUploadAvatar = ({modalActive, setModalActive}) => {
         img.src = URL.createObjectURL(file);
         img.onload = () => {
             if (img.width === img.height && file.type === "image/jpeg") {
+                const regular = /#|\s#/
+                const arrTags = tags.split(regular).filter(el => el !== '');
                 const formData = new FormData();
                 formData.append('userId', `${infoUser.id}`);
-                formData.append('categoryId', "1");
-                formData.append('img', file)
-                createAvatar(formData).then(data => setModalActive(false));
+                formData.append('categoryId', "2");
+                formData.append('img', file);
+                formData.append('tags', JSON.stringify(arrTags));
+                createAvatar(formData, infoUser).then(data => {
+                    avatar.setUserAvatars(data);
+                    setModalActive(false);
+                });
                 setViewImg(false);
             } else {
-                setErrorImg("Произошла ошибка!");
+                setErrorImg("Фото не соответсвует требованиям!");
                 return;
             }
         }
@@ -79,7 +87,11 @@ const ModalUploadAvatar = ({modalActive, setModalActive}) => {
                 <label>
                     <div className="full_input">
                         <div className="nameInput">Теги</div>
-                        <input type="text" placeholder="#anime" />
+                        <input 
+                            type="text" 
+                            placeholder="#anime" 
+                            onChange={(e) => setTags(e.target.value)}
+                        />
                     </div>
                 </label>
             </form>

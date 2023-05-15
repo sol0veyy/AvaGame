@@ -1,16 +1,36 @@
 import React from "react";
 import "./avatar.scss"
 import download from "../../img/download.svg"
+import btnDelete from "../../img/delete.svg"
+import jwtDecode from "jwt-decode";
 
-const Avatar = ({ clickHeart, avatar }) => {
+const Avatar = ({ clickDel, clickHeart, clickDownload, avatar, profile }) => {
+    const infoUser = jwtDecode(localStorage.getItem("token"));
+    const likes = avatar.likes.filter(like => like.userId === infoUser.id);
+    let onLike;
+
+    if (likes.length !== 0) {
+        onLike = true;
+    } else {
+        onLike = false;
+    }
+
     return (
         <div className="avatarBlock">
             <img className="picture" src={process.env.REACT_APP_API_URL + avatar.img} alt="avatar" />
+            <div className={`likes ${onLike ? "onLike" : ""}`}>{avatar.likes.length}</div>
             <div className="heartBlock">
-                <div onClick={() => clickHeart(avatar)} className={`heart ${avatar.like ? 'heartRed' : ''}`}>
+                <div onClick={() => clickHeart(avatar)} className={`heart ${onLike ? 'heartRed' : ''}`}>
                 </div>
             </div>
-            <div className="download"><img src={download} alt="download" /></div>
+            {profile ? 
+                <div onClick={() => clickDel(avatar)} className="delButton">
+                    <img src={btnDelete} alt="delete" />
+                </div>
+                :
+                ""
+            }
+            <div onClick={() => clickDownload(avatar)} className={`download ${profile ? "downloadProfile" : ""}`}><img src={download} alt="download" /></div>
         </div>
     )
 }

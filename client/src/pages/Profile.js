@@ -11,11 +11,12 @@ const Profile = () => {
 
     const [uploadActive, setUploadActive] = useState(false);
     const [settingsActive, setSettingsActive] = useState(false);
+    const [update, setUpdate] = useState(false);
 
     return (
         <div className="profile">
             <ProfileInfo setUploadActive={setUploadActive} setSettingsActive={setSettingsActive} />
-            <UserAvatars />
+            <UserAvatars update={update} setUpdate={setUpdate} />
             <ChangeSettings infoUser={infoUser} modalActive={settingsActive} setModalActive={setSettingsActive} />
             <ModalUploadAvatar modalActive={uploadActive} setModalActive={setUploadActive} />
         </div>

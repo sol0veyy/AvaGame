@@ -6,7 +6,6 @@ const uuid = require('uuid')
 const path = require('path')
 
 
-
 const generateJwt = (id, img, publications, login, email, role) => {
     return jwt.sign(
         { id, img, publications, login, email, role },
@@ -16,12 +15,14 @@ const generateJwt = (id, img, publications, login, email, role) => {
 }
 
 class UserController {
-    async registration(req, res) {
+    async registration(req, res, next) {
         const { login, email, password, role } = req.body
+        console.log(login);
         if (!login) {
             return next(ApiError.badRequest('Некорректный login'))
         }
-        if (!email) {
+        const regularEmail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/;
+        if (!email || !regularEmail.test(email)) {
             return next(ApiError.badRequest('Некорректный email'))
         }
         if (!password) {
@@ -39,7 +40,7 @@ class UserController {
         const user = await User.create({ login, email, role, password: hashPassword })
         const subscriber = await Subscriber.create({ userId: user.id })
         const token = generateJwt(user.id, user.img, user.publications, user.login, user.email, user.role)
-        return res.json({ token })
+        return res.json({ token, user })
     }
 
     async login(req, res, next) {
@@ -94,6 +95,13 @@ class UserController {
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.img, req.user.publications, req.user.login, req.user.email, req.user.role)
         return res.json({ token })
+    }
+
+    async update(req, res) {
+        const {userId} = req.params;
+        const user = await User.findByPk(userId);
+        const token = generateJwt(user.id, user.img, user.publications, user.login, user.email, user.role);
+        return res.json({token});
     }
 }
 

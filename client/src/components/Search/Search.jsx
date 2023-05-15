@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import "./search.css"
 
-const Search = () => {
-    const [textInput, setText] = useState('')
+const Search = ({textInput, setText}) => {
 
     function clearSearch() {
         setText('')

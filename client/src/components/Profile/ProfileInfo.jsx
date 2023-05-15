@@ -3,12 +3,12 @@ import "./profile.css";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
 import { Context } from "../..";
-import jwt_decode from 'jwt-decode'
+import jwt_decode from 'jwt-decode';
 
 const ProfileInfo = ({ setUploadActive, setSettingsActive }) => {
     const navigate = useNavigate();
     const {user} = useContext(Context);
-    const infoUser = jwt_decode(localStorage.getItem('token'))
+    const infoUser = jwt_decode(localStorage.getItem('token'));
 
     const logOut = () => {
         user.setUser({})
@@ -25,7 +25,7 @@ const ProfileInfo = ({ setUploadActive, setSettingsActive }) => {
                         alt="avatar"    
                     />
                     <span className="nickname">{infoUser.login}</span>
-                    <span className="col-avatar">{infoUser.publications} опубликованных аватарок</span>
+                    <span className="col-avatar">Количество аватарок - {infoUser.publications}</span>
                     <button className="backMain" onClick={() => navigate(MAIN_ROUTE)}>Главная</button>
                     <button
                         onClick={() => setUploadActive(true)}

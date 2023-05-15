@@ -24,3 +24,30 @@
     border-radius: 12px;
     background-color: white;
 }
+
+/* Accept Modal */
+.accept {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.acceptBtn {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.acceptBtn button {
+    border: none;
+    background: #084cdf;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+
+.accept button:hover {
+    background: #0d45a5;
+}

@@ -7,5 +7,6 @@ router.post('/registration', userController.registration)
 router.post('/login', userController.login)
 router.post('/settings', userController.settings)
 router.get('/auth', authMiddleware, userController.check)
+router.get('/update:userId', userController.update);
 
 module.exports = router

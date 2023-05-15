@@ -14,7 +14,43 @@
     z-index: 1;
 }
 
+.delButton {
+    position: relative;
+    visibility: hidden;
+    bottom: 35px;
+    cursor: pointer;
+    right: 55px;
+    bottom: 67px;
+    z-index: 10;
+}
+
+.delButton img {
+    width: 40px;
+    height: 40px;
+}
+
+.likes {
+    visibility: hidden;
+    position: absolute;
+    color: #898989;
+    margin-top: 15px;
+    font-size: 32px;
+    z-index: 10;
+}
+
+.onLike {
+    color: red;
+}
+
 .avatarBlock:hover {
+    .delButton {
+        visibility: visible;
+    }
+
+    .likes {
+        visibility: visible;
+    }
+
     .heart {
         visibility: visible;
     }
@@ -79,7 +115,12 @@
     z-index: 10;
 }
 
+.downloadProfile {
+    bottom: 110px;
+}
+
 .download img {
+    position: relative;
     width: 35px;
     height: 35px;
 }

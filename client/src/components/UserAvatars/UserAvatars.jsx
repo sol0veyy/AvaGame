@@ -1,31 +1,70 @@
-import React, { useContext, useEffect } from 'react';
-import { getUserAvatars } from '../../http/avatarsAPI';
+import React, { useContext, useEffect, useState } from 'react';
+import { delLike, getLike, getUserAvatars, setLikes } from '../../http/avatarsAPI';
 import { Context } from '../..';
-import { toJS } from 'mobx';
 import Avatar from '../Avatar/Avatar';
 import jwtDecode from 'jwt-decode';
 import { observer } from 'mobx-react-lite';
 import "./userAvatars.css";
+import ModalAccept from '../Modal/ModalAccept';
+import download from 'downloadjs';
 
-const UserAvatars = observer(() => {
+const UserAvatars = observer(({update, setUpdate}) => {
     const {avatar} = useContext(Context)
     const infoUser = jwtDecode(localStorage.getItem("token"));
+    const [allAvatars, setAllAvatars] = useState([]);
+    const [modalActive, setModalActive] = useState(false);
+    const [oneAvatar, setOneAvatar] = useState([]);
+
     const userId = infoUser.id;
 
     useEffect(() => {
-        getUserAvatars(userId).then(data => avatar.setUserAvatars(data));
-    }, [avatar, userId])
+        getUserAvatars(userId).then(data => {
+            setAllAvatars(data);
+            localStorage.setItem("colAvatars", data.length);
+        });
+    }, [avatar.userAvatars, userId])
+
+    const clickHeart = async (avatar) => {
+        let onLike;
+        await getLike(avatar.id, infoUser.id).then(data => {
+            if (data.length !== 0) {
+                onLike = true;
+            } else {
+                onLike = false;
+            }
+        });
+        if (!onLike) {
+            await setLikes(avatar.id, infoUser.id);
+        } else {
+            await delLike(avatar.id, infoUser.id);
+        }
+        getUserAvatars(userId).then(data => setAllAvatars(data));
+    }
+
+    const clickDel = (avatar) => {
+        setModalActive(true);
+        setOneAvatar(avatar);
+    }
+
+    const clickDownload = async (avatar) => {
+        download(process.env.REACT_APP_API_URL + "/" + avatar.img);
+    }
     
-    const allAvatars = toJS(avatar.userAvatars);
+    avatar.setAvatars(allAvatars);
 
     return (
         <div className="avatarsBlockProfile">
             {allAvatars.map(avatar => 
-                <Avatar 
+                <Avatar
+                    profile={true}
+                    clickDel={clickDel}
+                    clickHeart={clickHeart}
+                    clickDownload={clickDownload}
                     avatar={avatar}
                     key={avatar.id}
                 />
             )}
+            <ModalAccept update={update} setUpdate={setUpdate} oneAvatar={oneAvatar} userId={userId} modalActive={modalActive} setModalActive={setModalActive} />
         </div>
     );
 });

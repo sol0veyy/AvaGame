@@ -30,8 +30,15 @@ const UserComment = sequelize.define('user_comment', {
 
 const Avatar = sequelize.define('avatar', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    img: {type: DataTypes.STRING}
+    img: {type: DataTypes.STRING},
+    date: {type: DataTypes.DATE, defaultValue: DataTypes.NOW}
     // user_id, category_id
+})
+
+const AvatarLikes = sequelize.define('avatar_likes', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    avatarId: {type: DataTypes.INTEGER},
+    userId: {type: DataTypes.INTEGER}
 })
 
 const Category = sequelize.define('category', {
@@ -73,6 +80,9 @@ Avatar.belongsTo(User)
 Category.hasOne(Avatar)
 Avatar.belongsTo(Category)
 
+Avatar.hasMany(AvatarLikes, {as: 'likes'})
+AvatarLikes.belongsTo(Avatar)
+
 Avatar.hasMany(AvatarTag, {as: 'tags'})
 AvatarTag.belongsTo(Avatar)
 
@@ -85,6 +95,7 @@ module.exports = {
     Followers,
     UserComment,
     Avatar,
+    AvatarLikes,
     Category,
     AvatarTag,
     AvatarPublished

@@ -2,9 +2,20 @@ import React from "react";
 import Select from "../Select/Select";
 import "./filter.css"
 
-const Filter = () => {
-    const optionsDate = ["За всё время", "Сегодня", "За эту неделю", "За этот месяц", "За этот год"];
-    const optionsCategory = ["Все категории", "Игры", "Аниме", "Япония"];
+const Filter = ({setTime, setTags, setAuthor, setCategory, filterAvatar}) => {
+    // const optionsDate = ["За всё время", "Сегодня", "За эту неделю", "За этот месяц", "За этот год"];
+    const optionsDate = [
+        {value: "", name: "За всё время"},
+        {value: "day", name: "Сегодня"},
+        {value: "week", name: "За эту неделю"},
+        {value: "month", name: "За этот месяц"},
+        {value: "year", name: "За этот год"}
+    ]
+    // const optionsCategory = [
+    //     {value: "", name: "Все категории"},
+    //     {value: 2, name: "Аниме"},
+    //     {value: 3, name: "Девушки"}
+    // ];
 
     return (
         <div>
@@ -14,20 +25,28 @@ const Filter = () => {
                     <label>
                         Дата добавления
                     </label>
-                    <Select options={optionsDate} />
+                    <Select options={optionsDate} setTime={setTime} />
                     <label>
-                        Теги
+                        Тег
                     </label>
-                    <input type="text" placeholder="#anime" />
+                    <input 
+                        type="text" 
+                        placeholder="#anime" 
+                        onChange={(e) => setTags(e.target.value)} 
+                    />
                     <label>
                         Автор
                     </label>
-                    <input type="text" placeholder="Никнейм" />
-                    <label>
+                    <input 
+                        type="text" 
+                        placeholder="Никнейм"
+                        onChange={(e) => setAuthor(e.target.value)} 
+                    />
+                    {/* <label>
                         Категория
                     </label>
-                    <Select options={optionsCategory} />
-                    <input type="submit" value="Применить" />
+                    <Select options={optionsCategory} setCategory={setCategory} /> */}
+                    <input onClick={filterAvatar} type="submit" value="Применить" />
                 </div>
             </div>
         </div>
