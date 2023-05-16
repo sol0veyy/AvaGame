@@ -19,7 +19,7 @@ class UserController {
         const { login, email, password, role } = req.body
         console.log(login);
         if (!login) {
-            return next(ApiError.badRequest('Некорректный login'))
+            return next(ApiError.badRequest('Некорректный логин'))
         }
         const regularEmail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/;
         if (!email || !regularEmail.test(email)) {
@@ -27,6 +27,9 @@ class UserController {
         }
         if (!password) {
             return next(ApiError.badRequest('Некорректный пароль'))
+        }
+        if (password.length < 8) {
+            return next(ApiError.badRequest('Пароль должен быть не менее 8 символов'))
         }
         const candidateLogin = await User.findOne({ where: { login } })
         const candidateEmail = await User.findOne({ where: { email } })

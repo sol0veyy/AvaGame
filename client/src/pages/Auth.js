@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts"
 import "../css/reg-auth.css"
@@ -15,7 +15,7 @@ const Auth = observer(() => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('');
-
+    
     const click = async () => {
         try {
             if (isLogin) {
@@ -28,6 +28,12 @@ const Auth = observer(() => {
             navigate(MAIN_ROUTE)
         } catch (e) {
             setError(e.response.data.message);
+        }
+    }
+
+    const correctInput = (e) => {
+        if (e.key === ' ') {
+            e.preventDefault();
         }
     }
 
@@ -50,6 +56,7 @@ const Auth = observer(() => {
                         placeholder="Логин"
                         value={login}
                         onChange={e => setLogin(e.target.value)}
+                        onKeyDown={e => correctInput(e)}
                     />
                     {!isLogin ?
                         <input
@@ -60,6 +67,7 @@ const Auth = observer(() => {
                             placeholder="Почта"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
+                            onKeyDown={e => correctInput(e)}
                         />
                         :
                         ''
@@ -72,6 +80,7 @@ const Auth = observer(() => {
                         placeholder="Пароль"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        onKeyDown={e => correctInput(e)}
                     />
                     {error ?
                         <div style={{color: "red", marginTop: "5px"}}>
