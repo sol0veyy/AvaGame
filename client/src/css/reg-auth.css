@@ -71,3 +71,18 @@ form {
     font-weight: bold;
     text-decoration: none;
 }
+
+/* Видимость пароля */
+
+.password__input {
+    position: relative;
+}
+
+.password__control {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 18px;
+    right: 15px;
+    cursor: pointer;
+}

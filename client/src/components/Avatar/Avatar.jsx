@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./avatar.scss"
 import download from "../../img/download.svg"
 import btnDelete from "../../img/delete.svg"
-import jwtDecode from "jwt-decode";
+import { Context } from "../..";
 
 const Avatar = ({ clickDel, clickHeart, clickDownload, avatar, profile }) => {
-    const infoUser = jwtDecode(localStorage.getItem("token"));
-    const likes = avatar.likes.filter(like => like.userId === infoUser.id);
+    const {user} = useContext(Context);
+    const likes = avatar.likes.filter(like => like.userId === user.user['id']);
     let onLike;
 
     if (likes.length !== 0) {

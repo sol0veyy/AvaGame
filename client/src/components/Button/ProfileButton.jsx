@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Context } from "../..";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
 import "./button.css"
-import jwt_decode from "jwt-decode"
+import { observer } from "mobx-react-lite";
 
-const ProfileButton = () => {
+const ProfileButton = observer(() => {
     const { user } = useContext(Context);
-
-    const infoUser = jwt_decode(localStorage.getItem('token'))
-    const colAvatars = infoUser.publications;
+ 
+    const [userImg, setUserImg] = useState('');
+    const [login, setLogin] = useState('');
+    const [textColAvatars, setTextColAvatars] = useState('');
 
     const getNoun = (number, one, two, five) => {
         let n = Math.abs(number);
@@ -25,29 +26,24 @@ const ProfileButton = () => {
           return two;
         }
         return five;
-      }
+    }
 
-      let textColAvatars = colAvatars + " " + getNoun(colAvatars, "аватарка", "аватарки", "аватарок");
-
-    // if (colAvatars === 0 || colAvatars >= 5) {
-    //     textColAvatars = colAvatars + " аватарок";
-    // } else if (colAvatars % 10 === 1) {
-    //     textColAvatars = colAvatars + " аватарка";
-    // } else {
-    //     textColAvatars = colAvatars + " аватарки";
-    // }  
-
-
+    useEffect(() => {
+        console.log('2');
+        setTextColAvatars(user.user['publications'] + " " + getNoun(user.user['publications'], "аватарка", "аватарки", "аватарок"));
+        setUserImg(user.user['img']);
+        setLogin(user.user['login']);
+    }, [user])
 
     return (
         <div className="buttonsRight">
             {user.isAuth ?
                 <div className="blockRightProfile">
                     <NavLink to={PROFILE_ROUTE}>
-                        <img src={infoUser.img ? process.env.REACT_APP_API_URL + infoUser.img : "nonAvatar.jpg"} alt="profile" />
+                        <img src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
                     </NavLink>
                     <div className="info">
-                        <span className="login">{infoUser.login}</span>
+                        <span className="login">{login}</span>
                         <span className="colAvatar">{textColAvatars}</span>
                     </div>
                 </div>
@@ -63,6 +59,6 @@ const ProfileButton = () => {
             }
         </div>
     )
-}
+})
 
 export default ProfileButton;

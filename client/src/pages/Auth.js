@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts"
 import "../css/reg-auth.css"
@@ -15,7 +15,9 @@ const Auth = observer(() => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('');
-    
+    const [passView, setPassView] = useState(false);
+    const [typePass, setTypePass] = useState("password");
+
     const click = async () => {
         try {
             if (isLogin) {
@@ -26,6 +28,7 @@ const Auth = observer(() => {
             setError('');
             user.setIsAuth(true)
             navigate(MAIN_ROUTE)
+            window.location.reload();
         } catch (e) {
             setError(e.response.data.message);
         }
@@ -39,6 +42,16 @@ const Auth = observer(() => {
 
     const clearError = () => {
         setError('');
+    }
+
+    const passOnView = () => {
+        if (passView) {
+            setPassView(false);
+            setTypePass("password");
+        } else {
+            setPassView(true);
+            setTypePass("text");
+        }
     }
 
     return (
@@ -72,18 +85,21 @@ const Auth = observer(() => {
                         :
                         ''
                     }
-                    <input
-                        required
-                        type="password"
-                        className="form-control"
-                        name="pass"
-                        placeholder="Пароль"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        onKeyDown={e => correctInput(e)}
-                    />
+                    <div className="password__input">
+                        <input
+                            required
+                            type={typePass}
+                            className="form-control password"
+                            name="pass"
+                            placeholder="Пароль"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            onKeyDown={e => correctInput(e)}
+                        />
+                        <img onClick={passOnView} src={passView ? 'img/no-view.svg' : 'img/view.svg'} className="password__control" alt="view"></img>
+                    </div>
                     {error ?
-                        <div style={{color: "red", marginTop: "5px"}}>
+                        <div style={{ color: "red", marginTop: "5px" }}>
                             {error}
                         </div>
                         :

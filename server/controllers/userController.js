@@ -17,7 +17,6 @@ const generateJwt = (id, img, publications, login, email, role) => {
 class UserController {
     async registration(req, res, next) {
         const { login, email, password, role } = req.body
-        console.log(login);
         if (!login) {
             return next(ApiError.badRequest('Некорректный логин'))
         }

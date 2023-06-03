@@ -9,8 +9,8 @@ class AvatarController {
         try {
             let {userId, categoryId, tags} = req.body
             const {img} = req.files
-            let fileName = uuid.v4() + ".jpg"
-            img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            const fileName = uuid.v4() + ".jpg"
+            img.mv(path.resolve(__dirname, '..', 'static', fileName));
             const avatar = await Avatar.create({userId, categoryId, img: fileName})
             const allAvatar = await Avatar.findAll({
                 where: {userId},

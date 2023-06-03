@@ -4,13 +4,11 @@ import "./avatars.css"
 import { delLike, getAll, getByFilter, getByTag, getLike, setLikes } from "../../http/avatarsAPI";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
-import jwtDecode from "jwt-decode";
 import { toJS } from "mobx";
 import download from "downloadjs"
 
 const Avatars = observer(({ textInput, isFilter, filterUpdate, time, tags, author, category }) => {
-    const { avatar } = useContext(Context)
-    const userInfo = jwtDecode(localStorage.getItem("token"));
+    const { avatar, user } = useContext(Context)
     const [allAvatars, setAllAvatars] = useState([]);
 
     useEffect(() => {
@@ -24,8 +22,12 @@ const Avatars = observer(({ textInput, isFilter, filterUpdate, time, tags, autho
     }, [textInput, isFilter, avatar, filterUpdate])
 
     const clickHeart = async (avatar) => {
+        if (!user.isAuth) {
+            console.log('Не авторизован!');
+            return
+        }
         let onLike;
-        await getLike(avatar.id, userInfo.id).then(data => {
+        await getLike(avatar.id, user.user['id']).then(data => {
             if (data.length !== 0) {
                 onLike = true;
             } else {
@@ -34,9 +36,9 @@ const Avatars = observer(({ textInput, isFilter, filterUpdate, time, tags, autho
         });
 
         if (!onLike) {
-            await setLikes(avatar.id, userInfo.id);
+            await setLikes(avatar.id, user.user['id']);
         } else {
-            await delLike(avatar.id, userInfo.id);
+            await delLike(avatar.id, user.user['id']);
         }
         if (textInput !== '' && textInput.trim() !== '') {
             await getByTag(textInput.trim()).then(data => setAllAvatars(data));

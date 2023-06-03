@@ -52,6 +52,7 @@ const ModalUploadAvatar = ({ setColAvatars, modalActive, setModalActive}) => {
                 setViewImg(false);
             } else {
                 setErrorImg("Фото не соответсвует требованиям!");
+                console.log(errorImg);
                 return;
             }
         }

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import Filter from "./Filter/Filter";
-import Publications from "./Publications";
 import { getByFilter } from "../http/avatarsAPI";
 import { Context } from "..";
+import Avatars from "./Avatars/Avatars";
 
 const MainContent = ({textInput}) => {
     const {avatar} = useContext(Context)
@@ -30,21 +30,23 @@ const MainContent = ({textInput}) => {
 
     return (
         <div className="main-content">
-            <Publications 
-                textInput={textInput} 
-                isFilter={isFilter}
-                filterUpdate={filterUpdate}
-                time={time}
-                tags={tags}
-                author={author}
-                category={category}
-            />
+            <div className="publications">
+                <Avatars 
+                    textInput={textInput} 
+                    isFilter={isFilter}
+                    filterUpdate={filterUpdate}
+                    time={time}
+                    tags={tags}
+                    author={author}
+                    category={category}
+                />
+            </div>
             <Filter 
                 setTime={setTime} 
-                setTags={setTags} 
+                setTags={setTags}
                 setAuthor={setAuthor}
                 setCategory={setCategory}
-                filterAvatar={filterAvatar} 
+                filterAvatar={filterAvatar}
             />
         </div>
     )
