@@ -8,6 +8,7 @@ const ChangeSettings = ({ infoUser, modalActive, setModalActive }) => {
     const [email, setEmail] = useState("");
     const [file, setFile] = useState(null);
     const [isFile, setIsFile] = useState(false);
+    const [error, setError] = useState('')
 
     const selectFile = (e) => {
         setFile(e.target.files[0]);
@@ -29,7 +30,7 @@ const ChangeSettings = ({ infoUser, modalActive, setModalActive }) => {
             setEmail("");
             setIsFile(false);
         } catch (e) {
-            alert(e.response.data.message);
+            setError(e.response.data.message);
         }
     }
 
@@ -69,9 +70,17 @@ const ChangeSettings = ({ infoUser, modalActive, setModalActive }) => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </label>
+                {error ?
+                    <p style={{ color: "red" }}>{error}</p>
+                    :
+                    ""
+                }
             </form>
             <div className="form_buttons">
-                <button onClick={() => setModalActive(false)}>Закрыть</button>
+                <button onClick={() => {
+                    setModalActive(false)
+                    setError('')
+                }}>Закрыть</button>
                 <button onClick={startChange}>Сохранить</button>
             </div>
         </Modal>

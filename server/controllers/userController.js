@@ -84,9 +84,16 @@ class UserController {
             await user.update({login: login});
         }
         if (password) {
+            if (password.length < 8) {
+                return next(ApiError.badRequest('Пароль должен быть не менее 8 символов'))
+            }
             await user.update({password: hashPassword});
         }
         if (email) {
+            const regularEmail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/;
+            if (!email || !regularEmail.test(email)) {
+                return next(ApiError.badRequest('Некорректный email'))
+            }
             await user.update({email: email});
         }
 
