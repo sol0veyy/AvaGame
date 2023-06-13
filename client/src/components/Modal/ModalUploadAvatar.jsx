@@ -7,6 +7,7 @@ import { Context } from '../..';
 
 const ModalUploadAvatar = ({ setColAvatars, modalActive, setModalActive}) => {
     const infoUser = jwt_decode(localStorage.getItem('token'))
+    const {user} = useContext(Context)
     const {avatar} = useContext(Context);
     const [imgUrl, setImgUrl] = useState("");
     const [sizeImg, setSizeImg] = useState("");
@@ -50,6 +51,7 @@ const ModalUploadAvatar = ({ setColAvatars, modalActive, setModalActive}) => {
                     setModalActive(false);
                 });
                 setViewImg(false);
+                user.setUser({...user.user, publications: user.user['publications'] + 1})
             } else {
                 setErrorImg("Фото не соответсвует требованиям!");
                 console.log(errorImg);

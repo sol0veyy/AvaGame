@@ -6,6 +6,8 @@ import { Context } from '../..';
 
 const ModalAccept = ({update, setUpdate, oneAvatar, userId, modalActive, setModalActive}) => {
     const {avatar} = useContext(Context);
+    const {user} = useContext(Context)
+
     const delAvatar = async (oneAvatar, userId) => {
         deleteAvatar(oneAvatar.id, userId).then((data) => {
             avatar.setUserAvatars(data);
@@ -16,6 +18,7 @@ const ModalAccept = ({update, setUpdate, oneAvatar, userId, modalActive, setModa
                 setUpdate(true);
             }
         });
+        user.setUser({...user.user, publications: user.user['publications'] - 1})
     }
 
     return (

@@ -29,6 +29,7 @@ const ChangeSettings = ({ infoUser, modalActive, setModalActive }) => {
             setPassword("");
             setEmail("");
             setIsFile(false);
+            window.location.reload()
         } catch (e) {
             setError(e.response.data.message);
         }

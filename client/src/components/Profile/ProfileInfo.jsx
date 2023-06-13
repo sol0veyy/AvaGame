@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
@@ -9,12 +9,18 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }) => {
     const navigate = useNavigate();
     const {user} = useContext(Context);
 
+    const [publications, setPublications] = useState('');
+
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
         localStorage.removeItem('token')
         navigate(LOGIN_ROUTE)
     }
+
+    useEffect(() => {
+        setPublications(user.user['publications']);
+    }, [user.user])
 
     return (
         <div className="profileInfo">
@@ -25,7 +31,7 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }) => {
                         alt="avatar"    
                     />
                     <span className="nickname">{user.user['login']}</span>
-                    <span className="col-avatar">Количество аватарок - {user.user['publications']}</span>
+                    <span className="col-avatar">Количество аватарок - {publications}</span>
                     <button className="backMain" onClick={() => navigate(MAIN_ROUTE)}>Главная</button>
                     <button
                         onClick={() => setUploadActive(true)}

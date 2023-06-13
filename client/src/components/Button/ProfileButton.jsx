@@ -29,7 +29,6 @@ const ProfileButton = observer(() => {
     }
 
     useEffect(() => {
-        console.log('2');
         setTextColAvatars(user.user['publications'] + " " + getNoun(user.user['publications'], "аватарка", "аватарки", "аватарок"));
         setUserImg(user.user['img']);
         setLogin(user.user['login']);
