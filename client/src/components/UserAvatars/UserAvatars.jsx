@@ -54,7 +54,7 @@ const UserAvatars = observer(({update, setUpdate}) => {
 
     return (
         <div className="avatarsBlockProfile">
-            {allAvatars.map(avatar => 
+            {allAvatars[0] ? allAvatars.map(avatar => 
                 <Avatar
                     profile={true}
                     clickDel={clickDel}
@@ -63,7 +63,10 @@ const UserAvatars = observer(({update, setUpdate}) => {
                     avatar={avatar}
                     key={avatar.id}
                 />
-            )}
+            )
+            :
+            <h2 style={{color: '#777777', width: '450px', marginTop: '75px'}}>Нет опубликованных аватарок</h2>
+            }
             <ModalAccept update={update} setUpdate={setUpdate} oneAvatar={oneAvatar} userId={userId} modalActive={modalActive} setModalActive={setModalActive} />
         </div>
     );

@@ -13,9 +13,10 @@ const Search = ({textInput, setText}) => {
                 <input
                     value={textInput}
                     onChange={event => setText(event.target.value)}
-                    type="text" 
+                    type="text"
                     placeholder="Поиск" 
-                    id="mySearch" />
+                    id="mySearch"
+                    />
             </div>
             <span className="clear" onClick={clearSearch}></span>
         </div>
