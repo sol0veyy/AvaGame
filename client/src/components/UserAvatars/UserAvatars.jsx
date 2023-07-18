@@ -1,49 +1,52 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../..';
 import Avatar from '../Avatar/Avatar';
-import styles from "./userAvatars.module.css";
+import styles from './userAvatars.module.css';
 import ModalAccept from '../Modal/ModalAccept';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-const UserAvatars = observer(({clickHeart, clickDownload}) => {
-    const {user, avatars} = useContext(Context)
+const UserAvatars = observer(({ clickHeart, clickDownload }) => {
+    const { user, avatars } = useContext(Context);
     const [modalAccept, setModalAccept] = useState({
         active: false,
-        avatar: {}
+        avatar: {},
     });
-    const userAvatars = toJS(avatars.avatars).filter(avatar => avatar.userId === user.user['id']).sort((a, b) => b.id - a.id);
+    const userAvatars = toJS(avatars.avatars)
+        .filter((avatar) => avatar.userId === user.user['id'])
+        .sort((a, b) => b.id - a.id);
 
     const clickDel = (avatar) => {
         setModalAccept({
             active: true,
-            avatar: {...avatar}
-        })
-    }
-
+            avatar: { ...avatar },
+        });
+    };
 
     return (
         <>
-        {userAvatars[0] ?
-            <div className={styles.avatarsBlockProfile}>
-                {userAvatars.map(avatar => 
-                    <Avatar
-                        profile={true}
-                        clickDel={clickDel}
-                        clickHeart={clickHeart}
-                        clickDownload={clickDownload}
-                        avatar={avatar}
-                        key={avatar.id}
+            {userAvatars[0] ? (
+                <div className={styles.avatarsBlockProfile}>
+                    {userAvatars.map((avatar) => (
+                        <Avatar
+                            profile={true}
+                            clickDel={clickDel}
+                            clickHeart={clickHeart}
+                            clickDownload={clickDownload}
+                            avatar={avatar}
+                            key={avatar.id}
+                        />
+                    ))}
+                    <ModalAccept
+                        modalAccept={modalAccept}
+                        setModalAccept={setModalAccept}
                     />
-                )}
-            <ModalAccept 
-                modalAccept={modalAccept} 
-                setModalAccept={setModalAccept}
-            />
-            </div>
-            :
-            <h2 className={styles.noAvatars}>Нет опубликованных аватарок</h2>
-        }
+                </div>
+            ) : (
+                <h2 className={styles.noAvatars}>
+                    Нет опубликованных аватарок
+                </h2>
+            )}
         </>
     );
 });

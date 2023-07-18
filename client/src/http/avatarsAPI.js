@@ -33,12 +33,12 @@ export const getByTag = async (tag) => {
     return data;
 }
 
-export const getAll = async () => {
-    const {data} = await $host.get('api/avatar/');
+export const getAll = async (page) => {
+    const {data} = await $host.get('api/avatar/' + page);
     return data;
 }
 
 export const getUserAvatars = async (userId) => {
-    const {data} = await $host.get('api/avatar/' + userId);
+    const {data} = await $host.get('api/avatar/user/' + userId);
     return data;
 }

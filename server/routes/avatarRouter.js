@@ -8,8 +8,8 @@ router.post('/del', avatarController.delAvatar)
 router.post('/like', avatarController.setLikes);
 router.post('/like/del', avatarController.delLike);
 router.get('/like/:avatarId/:userId', avatarController.getLike)
-router.get('/:userId', avatarController.getUserAvatars);
+router.get('/user/:userId', avatarController.getUserAvatars);
 router.get('/tag/:tag', avatarController.getByTag);
-router.get('/', avatarController.getAll);
+router.get('/:page', avatarController.getAll);
 
 module.exports = router;
