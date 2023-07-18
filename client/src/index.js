@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Context.Provider value={{
     user: new UserStore(),
-    avatar: new AvatarStore()
+    avatars: new AvatarStore()
   }}>
     <App />
   </Context.Provider>

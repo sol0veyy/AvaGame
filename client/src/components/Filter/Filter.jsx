@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from "../Select/Select";
 import "./filter.css"
 
-const Filter = ({setTime, setTags, setAuthor, setCategory, filterAvatar}) => {
-    // const optionsDate = ["За всё время", "Сегодня", "За эту неделю", "За этот месяц", "За этот год"];
+const DataFilter = {
+    time: "",
+    tags: "",
+    author: "",
+    category: 2
+}
+
+const Filter = ({filterAvatar}) => {
     const optionsDate = [
         {value: "", name: "За всё время"},
         {value: "day", name: "Сегодня"},
@@ -11,11 +17,8 @@ const Filter = ({setTime, setTags, setAuthor, setCategory, filterAvatar}) => {
         {value: "month", name: "За этот месяц"},
         {value: "year", name: "За этот год"}
     ]
-    // const optionsCategory = [
-    //     {value: "", name: "Все категории"},
-    //     {value: 2, name: "Аниме"},
-    //     {value: 3, name: "Девушки"}
-    // ];
+
+    const [dataFilter, setDataFilter] = useState(DataFilter)
 
     return (
         <div>
@@ -25,14 +28,14 @@ const Filter = ({setTime, setTags, setAuthor, setCategory, filterAvatar}) => {
                     <label>
                         Дата добавления
                     </label>
-                    <Select options={optionsDate} setTime={setTime} />
+                    <Select options={optionsDate} dataFilter={dataFilter} setDataFilter={setDataFilter} />
                     <label>
                         Тег
                     </label>
                     <input 
                         type="text" 
                         placeholder="#anime" 
-                        onChange={(e) => setTags(e.target.value)} 
+                        onChange={(e) => setDataFilter({...dataFilter, tags: e.target.value})} 
                     />
                     <label>
                         Автор
@@ -40,13 +43,9 @@ const Filter = ({setTime, setTags, setAuthor, setCategory, filterAvatar}) => {
                     <input 
                         type="text" 
                         placeholder="Никнейм"
-                        onChange={(e) => setAuthor(e.target.value)} 
+                        onChange={(e) => setDataFilter({...dataFilter, author: e.target.value})} 
                     />
-                    {/* <label>
-                        Категория
-                    </label>
-                    <Select options={optionsCategory} setCategory={setCategory} /> */}
-                    <input onClick={filterAvatar} type="submit" value="Применить" />
+                    <input onClick={() => filterAvatar(dataFilter)} type="submit" value="Применить" />
                 </div>
             </div>
         </div>

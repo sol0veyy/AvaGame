@@ -22,7 +22,7 @@
 .modal_content {
     padding: 10px 50px;
     border-radius: 12px;
-    background-color: white;
+    background-color: #15171E;
 }
 
 /* Accept Modal */
@@ -39,8 +39,8 @@
 }
 
 .acceptBtn button {
-    border: none;
-    background: #084cdf;
+    border: 2px solid #0de23b;
+    background: #15171E;
     padding: 10px 20px;
     border-radius: 10px;
     color: #fff;
@@ -49,5 +49,5 @@
 }
 
 .accept button:hover {
-    background: #0d45a5;
+    background: #15171E;
 }

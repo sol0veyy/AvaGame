@@ -19,24 +19,29 @@
 }
 
 .nickname {
+    color: #fff;
     font-size: 32px;
     font-weight: 700;
 }
 
 .col-avatar {
-    color: #777;
+    color: #999;
 }
 
 .infoBlock button {
     cursor: pointer;
     width: 300px;
     padding: 10px;
-    background-color: #287DFC;
+    background-color: #15171E;
     color: white;
-    border: none;
+    border: 2px solid #0de23b;
     font-size: 16px;
     border-radius: 45px;
     margin-top: 5px;
+}
+
+.formUploadAvatar {
+    color: #fff;
 }
 
 .full_input {
@@ -57,18 +62,13 @@
 
 .formUploadAvatar input[type=file]::file-selector-button {
     margin-right: 20px;
-    border: none;
-    background: #084cdf;
+    border: 2px solid #0de23b;
+    background: #15171E;
     padding: 10px 20px;
     border-radius: 10px;
     color: #fff;
     cursor: pointer;
-    transition: background .2s ease-in-out;
     margin-top: 20px;
-}
-  
-.formUploadAvatar input[type=file]::file-selector-button:hover {
-    background: #0d45a5;
 }
 
 .form_buttons {
@@ -79,18 +79,14 @@
 }
 
 .form_buttons button {
-    border: none;
-    background: #084cdf;
+    border: 2px solid #0de23b;
+    background: #15171E;
     padding: 10px 20px;
     border-radius: 10px;
     color: #fff;
     cursor: pointer;
     transition: background .2s ease-in-out;
     margin-bottom: 20px;
-}
-
-.form_buttons button:hover {
-    background: #0d45a5;
 }
 
 .rules {
@@ -116,20 +112,20 @@
     margin: 10px 0 10px 0;
 }
 
+.formСhangeSettings input[type=file] {
+    color: #fff;
+}
+
 .formСhangeSettings input[type=file]::file-selector-button {
     margin-right: 20px;
-    border: none;
-    background: #084cdf;
+    border: 2px solid #0de23b;
+    background: #15171E;
     padding: 10px 20px;
     border-radius: 10px;
     color: #fff;
     cursor: pointer;
     transition: background .2s ease-in-out;
     margin-bottom: 15px;
-}
-  
-.formСhangeSettings input[type=file]::file-selector-button:hover {
-    background: #0d45a5;
 }
 
 .newImgBlock {
@@ -141,6 +137,6 @@
 
 .newImgBlock h2 {
     margin-top: 20px;
-    margin-bottom: 10px;
-    color: #084cdf;
+    margin-bottom: 20px;
+    color: #0de23b;
 }

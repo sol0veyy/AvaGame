@@ -4,30 +4,24 @@ import { deleteAvatar } from '../../http/avatarsAPI';
 import { useContext } from 'react';
 import { Context } from '../..';
 
-const ModalAccept = ({update, setUpdate, oneAvatar, userId, modalActive, setModalActive}) => {
-    const {avatar} = useContext(Context);
-    const {user} = useContext(Context)
+const ModalAccept = ({modalAccept, setModalAccept}) => {
+    const {user, avatars} = useContext(Context)
 
-    const delAvatar = async (oneAvatar, userId) => {
-        deleteAvatar(oneAvatar.id, userId).then((data) => {
-            avatar.setUserAvatars(data);
-            setModalActive(false);
-            if (update) {
-                setUpdate(false);
-            } else {
-                setUpdate(true);
-            }
+    const delAvatar = async (avatar) => {
+        deleteAvatar(avatar.id, user.user['id']).then((data) => {
+            avatars.setAvatars([...data]);
+            setModalAccept({active: false});
         });
         user.setUser({...user.user, publications: user.user['publications'] - 1})
     }
 
     return (
-        <Modal active={modalActive} setActive={setModalActive}>
+        <Modal active={modalAccept.active}>
             <div className='accept'>
-                <div>Удаление аватарки</div>
+                <div style={{color: "#fff"}}>Удаление аватарки</div>
                 <div className='acceptBtn'>
-                    <button onClick={() => delAvatar(oneAvatar, userId)}>Удалить</button>
-                    <button onClick={() => setModalActive(false)}>Отмена</button>
+                    <button onClick={() => delAvatar(modalAccept.avatar)}>Удалить</button>
+                    <button onClick={() => setModalAccept({active: false})}>Отмена</button>
                 </div>
             </div>
         </Modal>

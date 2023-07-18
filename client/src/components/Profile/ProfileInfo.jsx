@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE, MAIN_ROUTE } from "../../utils/consts";
+import { MAIN_ROUTE } from "../../utils/consts";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
 
@@ -15,7 +15,7 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }) => {
         user.setUser({})
         user.setIsAuth(false)
         localStorage.removeItem('token')
-        navigate(LOGIN_ROUTE)
+        navigate(MAIN_ROUTE)
     }
 
     useEffect(() => {

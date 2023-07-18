@@ -5,10 +5,9 @@ import { createAvatar } from "../../http/avatarsAPI";
 import Modal from "./Modal";
 import { Context } from '../..';
 
-const ModalUploadAvatar = ({ setColAvatars, modalActive, setModalActive}) => {
+const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
     const infoUser = jwt_decode(localStorage.getItem('token'))
-    const {user} = useContext(Context)
-    const {avatar} = useContext(Context);
+    const {user, avatars} = useContext(Context)
     const [imgUrl, setImgUrl] = useState("");
     const [sizeImg, setSizeImg] = useState("");
     const [errorImg, setErrorImg] = useState("");
@@ -47,7 +46,7 @@ const ModalUploadAvatar = ({ setColAvatars, modalActive, setModalActive}) => {
                 formData.append('img', file);
                 formData.append('tags', JSON.stringify(arrTags));
                 createAvatar(formData, infoUser).then(data => {
-                    avatar.setUserAvatars(data);
+                    avatars.setAvatars(data);
                     setModalActive(false);
                 });
                 setViewImg(false);

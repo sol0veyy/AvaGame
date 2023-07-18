@@ -33,23 +33,6 @@ export const getByTag = async (tag) => {
     return data;
 }
 
-export const getByFilter = async (time, tags, author, category) => {
-    if (time === "") {
-        time = "all";
-    }
-    if (tags === "") {
-        tags = "all";
-    }
-    if (author === "") {
-        author = "all";
-    }
-    if (category === "") {
-        category = "all";
-    }
-    const {data} = await $host.get('api/avatar/filter/' + time + "/" + tags + "/" + author + "/" + category);
-    return data;
-}
-
 export const getAll = async () => {
     const {data} = await $host.get('api/avatar/');
     return data;

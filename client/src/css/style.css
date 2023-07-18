@@ -13,7 +13,7 @@
 }
 
 body {
-    background-color: #fff;
+    background-color: #15171E;
 }
 
 header {
@@ -23,12 +23,5 @@ header {
 }
 
 .logo {
-    margin: 0 40px 0 40px;
-    fill: #287DFC;
-}
-
-.main-content {
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    justify-content: right;
+    margin: 0 40px 0 40px; 
 }

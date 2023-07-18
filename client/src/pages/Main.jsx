@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import 'https://kit.fontawesome.com/ec79f0a95b.js'
 import Header from "../components/Header";
 import '../css/style.css'
-import MainContent from "../components/MainContent";
+import MainContent from "../components/MainContent/MainContent";
 
 const Main = () => {
     const [textInput, setText] = useState('')

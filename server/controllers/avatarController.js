@@ -2,7 +2,7 @@ const {Avatar, AvatarModeration, AvatarTag, User, AvatarLikes} = require('../mod
 const ApiError = require('../error/ApiError')
 const path = require('path')
 const uuid = require('uuid')
-const { Op, where } = require('sequelize')
+const { Op } = require('sequelize')
 const { Sequelize } = require('../db')
 class AvatarController {
     async create(req, res, next) {
@@ -11,9 +11,8 @@ class AvatarController {
             const {img} = req.files
             const fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName));
-            const avatar = await Avatar.create({userId, categoryId, img: fileName})
+            const avatar = await Avatar.create({userId, img: fileName})
             const allAvatar = await Avatar.findAll({
-                where: {userId},
                 order: [
                     ['id', 'DESC']
                 ],
@@ -54,7 +53,6 @@ class AvatarController {
         const user = await User.findByPk(userId);
         await user.update({publications: user.publications - 1});
         const avatar = await Avatar.findAll({
-            where: {userId},
             order: [
                 ['id', 'DESC']
             ],
@@ -124,50 +122,6 @@ class AvatarController {
             }
         )
         return res.json(avatars)
-    }
-
-    async getByFilter(req, res) {
-        const {time, tags, author, category} = req.params;
-        const where = {};
-        const include = [
-            {
-                model: AvatarTag,
-                as: 'tags',
-            }, 
-            {
-                model: AvatarLikes, as: 'likes'
-            }];
-
-        if (time !== "all") {
-            where.createdAt = {[Op.gte]: Sequelize.fn('date_trunc', `${time}`, Sequelize.fn('now'))};
-        }
-
-        if (tags !== "all") {
-            include.push({
-                model: AvatarTag,
-                as: 'tags',
-                where: {name: tags}
-            });
-        }
-
-        if (author !== "all") {
-            include.push({
-                model: User,
-                as: 'user',
-                where: {login: author}
-            })
-        }
-
-        if (category !== "all") {
-            where.categoryId = category;
-        }
-
-        const avatars = await Avatar.findAll({where, include,
-            order: [
-                ['id', 'DESC']
-            ]
-        });
-        return res.json(avatars);
     }
 
     async getByTag(req, res) {

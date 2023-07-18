@@ -16,7 +16,7 @@ const Search = ({textInput, setText}) => {
                     type="text"
                     placeholder="Поиск" 
                     id="mySearch"
-                    />
+                />
             </div>
             <span className="clear" onClick={clearSearch}></span>
         </div>
