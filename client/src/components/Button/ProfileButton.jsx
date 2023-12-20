@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Context } from "../..";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
-import "./button.css"
 import { observer } from "mobx-react-lite";
 
 const ProfileButton = observer(() => {
@@ -35,28 +34,28 @@ const ProfileButton = observer(() => {
     }, [user])
 
     return (
-        <div className="buttonsRight">
+        <>
             {user.isAuth ?
-                <div className="blockRightProfile">
+                <div className="col d-flex justify-content-end gap-2">
                     <NavLink to={PROFILE_ROUTE}>
-                        <img src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
+                        <img className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
                     </NavLink>
-                    <div className="info">
-                        <span className="login">{login}</span>
-                        <span className="colAvatar">{textColAvatars}</span>
+                    <div className="d-flex flex-column">
+                        <span>{login}</span>
+                        <span className="text-white-50">{textColAvatars}</span>
                     </div>
                 </div>
                 :
-                <div>
+                <div className=" col d-flex gap-2 justify-content-end">
                     <NavLink to={REGISTRATION_ROUTE}>
-                        <button>Регистрация</button>
+                        <button className="btn btn-outline-secondary">Регистрация</button>
                     </NavLink>
                     <NavLink to={LOGIN_ROUTE}>
-                        <button>Вход</button>
+                        <button className="btn btn-primary">Вход</button>
                     </NavLink>
                 </div>
             }
-        </div>
+        </>
     )
 })
 

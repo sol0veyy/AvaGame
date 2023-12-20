@@ -74,7 +74,7 @@ const Avatars = observer(({ textInput, profile }) => {
         <>
             {!profile ? (
                 <>
-                    <div className={styles.avatarsBlock}>
+                    <div className="d-flex gap-4 px-5 justify-content-center mt-5">
                         {toJS(avatars.avatars)
                             .sort((a, b) => b.id - a.id)
                             .map((avatar) => (
@@ -86,11 +86,11 @@ const Avatars = observer(({ textInput, profile }) => {
                                 />
                             ))}
                     </div>
-                    <Pagination
+                    {/* <Pagination
                         pages={pages}
                         selectedPage={selectedPage}
                         setPage={setPage}
-                    />
+                    /> */}
                 </>
             ) : (
                 <UserAvatars

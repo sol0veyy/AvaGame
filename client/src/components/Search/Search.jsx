@@ -1,25 +1,17 @@
-import "./search.css"
-
 const Search = ({textInput, setText}) => {
-
-    function clearSearch() {
-        setText('')
-    }
-
     return (
-        <div className="search">
-            <div id="icon"></div>
-            <div className="input">
-                <input
-                    value={textInput}
-                    onChange={event => setText(event.target.value)}
-                    type="text"
-                    placeholder="Поиск" 
-                    id="mySearch"
-                />
-            </div>
-            <span className="clear" onClick={clearSearch}></span>
-        </div>
+        <form className="d-flex col-4" role="search">
+            <input 
+                value={textInput}
+                onChange={event => setText(event.target.value)}
+                className="form-control me-2" 
+                type="search" 
+                placeholder="поиск" 
+                aria-label="Search"
+                id="mySearch" 
+            />
+            {/* <button className="btn btn-outline-success" type="submit">Найти</button> */}
+        </form>
     )
 }
 

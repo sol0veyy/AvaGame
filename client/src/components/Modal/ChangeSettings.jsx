@@ -37,52 +37,55 @@ const ChangeSettings = ({ infoUser, modalActive, setModalActive }) => {
 
     return (
         <Modal active={modalActive} setActive={setModalActive}>
-            <form className="formСhangeSettings">
-                <label>
-                    <div className="newImgBlock">
-                        <h2>Новая аватарка</h2>
-                        <input 
-                            type="file" 
-                            onChange={selectFile} 
-                        />
-                    </div>
-                </label>
-                <label>
-                    <input
-                        type="text" 
-                        placeholder="Новый логин"
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
+            <form>
+                <div className='mb-3'>
+                    <label htmlFor="inputFile" className='form-label'>Новая аватарка</label>
+                    <input id='inputFile' className='form-control' type="file" onChange={selectFile} />
+                </div>
+                <div className='mb-3'>
+                    <input 
+                        type="text"
+                        placeholder='Новый логин' 
+                        value={login} 
+                        onChange={(e) => setLogin(e.target.value)} 
+                        className='form-control' 
                     />
-                </label>
-                <label>
-                    <input
+                </div>
+                <div className='mb-3'>
+                    <input 
                         type="password" 
                         placeholder="Новый пароль" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        className='form-control' 
                     />
-                </label>
-                <label>
+                </div>
+                <div className='mb-3'>
                     <input 
                         type="email" 
                         placeholder="Новая почта" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                        className='form-control' 
                     />
-                </label>
+                </div>
                 {error ?
-                    <p style={{ color: "red" }}>{error}</p>
+                    <p className='text-danger text-center'>{error}</p>
                     :
                     ""
                 }
             </form>
-            <div className="form_buttons">
-                <button onClick={() => {
-                    setModalActive(false)
-                    setError('')
-                }}>Закрыть</button>
-                <button onClick={startChange}>Сохранить</button>
+            <div className='d-flex justify-content-end gap-2'>
+                <button 
+                    onClick={() => {
+                        setModalActive(false)
+                        setError('')
+                    }}
+                    className='btn btn-outline-secondary'
+                >
+                    Закрыть
+                </button>
+                <button className='btn btn-success' onClick={startChange}>Сохранить</button>
             </div>
         </Modal>
     );

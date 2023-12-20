@@ -24,29 +24,29 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }) => {
 
   return (
     <div className='profileInfo'>
-      <div className='infoBlock'>
-        <img
-          src={
-            user.user['img']
-              ? process.env.REACT_APP_API_URL + user.user['img']
-              : `img/nonAvatar.jpg`
-          }
-          className='avatar'
-          alt='avatar'
-        />
-        <span className='nickname'>{user.user['login']}</span>
-        <span className='col-avatar'>Количество аватарок - {publications}</span>
-        <button className='backMain' onClick={() => navigate(MAIN_ROUTE)}>
-          Главная
-        </button>
-        <button onClick={() => setUploadActive(true)}>
-          Опубликовать аватарку
-        </button>
-        <button onClick={() => setSettingsActive(true)}>
-          Настройки профиля
-        </button>
-        <button onClick={() => logOut()}>Выйти с аккаунта</button>
-      </div>
+        <div className='infoBlock'>
+            <img
+                src={
+                    user.user['img']
+                    ? process.env.REACT_APP_API_URL + user.user['img']
+                    : `img/nonAvatar.jpg`
+                }
+                className='avatar'
+                alt='avatar'
+            />
+            <span className='nickname'>{user.user['login']}</span>
+            <span className='col-avatar'>Количество аватарок - {publications}</span>
+            <button className='w-75 btn btn-outline-primary' onClick={() => navigate(MAIN_ROUTE)}>
+                Главная
+            </button>
+            <button className='w-75 btn btn-outline-primary' onClick={() => setUploadActive(true)}>
+                Опубликовать аватарку
+            </button>
+            <button className='w-75 btn btn-outline-primary' onClick={() => setSettingsActive(true)}>
+                Настройки профиля
+            </button>
+            <button className='w-75 btn btn-outline-danger' onClick={() => logOut()}>Выйти с аккаунта</button>
+        </div>
     </div>
   );
 });

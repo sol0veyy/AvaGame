@@ -19,12 +19,6 @@
     pointer-events: all;
 }
 
-.modal_content {
-    padding: 10px 50px;
-    border-radius: 12px;
-    background-color: #15171E;
-}
-
 /* Accept Modal */
 .accept {
     display: flex;
@@ -50,4 +44,10 @@
 
 .accept button:hover {
     background: #15171E;
+}
+
+/* UploadAvatar */
+
+.upload_rules {
+    font-size: 14px;
 }

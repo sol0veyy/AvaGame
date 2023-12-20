@@ -4,7 +4,7 @@ import "./modal.css"
 const Modal = ({active, children}) => {
     return (
         <div className={active ? "modal active" : "modal"}>
-            <div className="modal_content" onClick={e => e.stopPropagation()}>
+            <div className='p-3 rounded bg-body-tertiary' onClick={e => e.stopPropagation()}>
                 {children}
             </div>
         </div>

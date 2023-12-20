@@ -12,10 +12,6 @@
     font-family: 'Montserrat', 'sans-serif';
 }
 
-body {
-    background-color: #15171E;
-}
-
 header {
     height: 160px;
     display: flex;

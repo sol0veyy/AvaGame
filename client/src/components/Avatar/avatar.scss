@@ -1,45 +1,15 @@
-.avatarBlock {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-}
-
-.picture {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: 1px solid black;
-    z-index: 1;
-}
-
 .delButton {
-    position: relative;
+    position: absolute;
     visibility: hidden;
-    bottom: 35px;
+    bottom: 10px;
+    left: 15px;
     cursor: pointer;
-    right: 55px;
-    bottom: 67px;
-    z-index: 10;
-}
-
-.delButton img {
-    width: 40px;
-    height: 40px;
 }
 
 .likes {
     visibility: hidden;
     position: absolute;
-    color: #fff;
     margin-top: 15px;
-    font-size: 32px;
-    z-index: 10;
-}
-
-.onLike {
-    color: red;
 }
 
 .avatarBlock:hover {
@@ -66,13 +36,9 @@
 
 .heart {
     visibility: hidden;
-    background-color: #fff;
-    height: 20px;
-    position: relative;
-    bottom: 35px;
-    transform: rotate(-45deg);
-    width: 20px;
-    z-index: 10;
+    position: absolute;
+    bottom: 10px;
+    left: 60px;
     cursor: pointer;
 }
 
@@ -80,47 +46,14 @@
     background-color: red;
 }
 
-.heart.heartRed::before,
-.heart.heartRed::after {
-    content: "";
-    background-color: red;
-}
-
-.heart:before,
-.heart:after {
-    content: "";
-    background-color: #fff;
-    border-radius: 50%;
-    height: 20px;
-    position: absolute;
-    width: 20px;
-}
-
-.heart:before {
-    top: -10px;
-    left: 0;
-}
-
-.heart:after {
-    left: 10px;
-    top: 0;
-}
-
 .download {
     cursor: pointer;
     visibility: hidden;
-    position: relative;
-    bottom: 65px;
-    left: 55px;
-    z-index: 10;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
 }
 
-.downloadProfile {
-    bottom: 110px;
-}
-
-.download img {
-    position: relative;
-    width: 35px;
-    height: 35px;
+.red {
+    color: red;
 }

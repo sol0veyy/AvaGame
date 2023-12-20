@@ -61,13 +61,13 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
 
     return (
         <Modal active={modalActive} setActive={setModalActive}>
-            <form className="formUploadAvatar">
+            <form>
                 {viewImg ?
-                    <div>
-                        <img src={imgUrl} style={{ marginTop: "20px" }} alt="img" width="300px" height="300px" />
-                        <p>{sizeImg}</p>
+                    <div className='d-flex flex-column align-items-center gap-2 mb-3'>
+                        <img src={imgUrl} alt="img" width="300px" height="300px" />
+                        <p className='text-secondary-emphasis mb-0'>{sizeImg}</p>
                         {errorImg ?
-                            <p style={{ color: "red" }}>{errorImg}</p>
+                            <p className='text-danger mb-0'>{errorImg}</p>
                             :
                             ""
                         }
@@ -75,31 +75,34 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
                     :
                     ""
                 }
-                <label>
-                    <input
-                        type="file"
+                <div className='mb-3'>
+                    <input 
+                        type="file" 
+                        className='form-control' 
                         onChange={selectFile}
                     />
-                </label>
-                <div className="rules">
+                </div>
+                <div className='upload_rules text-secondary-emphasis'>
                     <p>Изображение должно быть:</p>
                     <p>- в формате JPG или PNG</p>
                     <p>- 1 к 1</p>
                 </div>
-                <label>
-                    <div className="full_input">
-                        <div className="nameInput">Теги</div>
+                <div className='row'>
+                    <label htmlFor="inputTags" className='col-sm-2 col-form-label'>Теги</label>
+                    <div className='col-sm-10'>
                         <input 
+                            id='inputTags' 
                             type="text" 
-                            placeholder="#anime" 
+                            className='form-control' 
+                            placeholder='#anime' 
                             onChange={(e) => setTags(e.target.value)}
                         />
                     </div>
-                </label>
+                </div>
             </form>
-            <div className="form_buttons">
-                <button onClick={() => setModalActive(false)}>Закрыть</button>
-                <button onClick={uploadAvatar}>Опубликовать</button>
+            <div className="d-flex justify-content-end gap-2 mt-3">
+                <button className='btn btn-outline-secondary' onClick={() => setModalActive(false)}>Закрыть</button>
+                <button className='btn btn-success' onClick={uploadAvatar}>Опубликовать</button>
             </div>
         </Modal>
     );

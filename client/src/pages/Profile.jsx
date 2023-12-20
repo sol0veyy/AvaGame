@@ -16,8 +16,8 @@ const Profile = () => {
         <div className="profile">
             <ProfileInfo setUploadActive={setUploadActive} setSettingsActive={setSettingsActive} />
             <Avatars profile={true} />
-            <ChangeSettings infoUser={infoUser} modalActive={settingsActive} setModalActive={setSettingsActive} />
             <ModalUploadAvatar modalActive={uploadActive} setModalActive={setUploadActive} />
+            <ChangeSettings infoUser={infoUser} modalActive={settingsActive} setModalActive={setSettingsActive} />
         </div>
     )
 }

@@ -55,41 +55,43 @@ const Auth = observer(() => {
     }
 
     return (
-        <div className="main">
-            <div className="auth">
-                <h1>
-                    {isLogin ? 'Авторизация' : 'Регистрация'}
-                </h1>
-                <form action="#" method="post">
-                    <input
-                        required
-                        type="text"
-                        className="form-control"
-                        name="login"
-                        placeholder="Логин"
-                        value={login}
-                        onChange={e => setLogin(e.target.value)}
-                        onKeyDown={e => correctInput(e)}
-                    />
-                    {!isLogin ?
+        <div className="main position-relative">
+            <div className="w-25 position-absolute top-50 start-50 translate-middle">
+                <h1 className="text-center mb-4">{isLogin ? 'Авторизация' : 'Регистрация'}</h1>
+                <form className="row g-3 mb-4">
+                    <div className="col-12">
                         <input
-                            required
-                            type="email"
-                            className="form-control"
-                            name="email"
-                            placeholder="Почта"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            onKeyDown={e => correctInput(e)}
+                                required
+                                type="text"
+                                className="form-control"
+                                name="login"
+                                placeholder="Логин"
+                                value={login}
+                                onChange={e => setLogin(e.target.value)}
+                                onKeyDown={e => correctInput(e)}
                         />
+                    </div>
+                    {!isLogin ?
+                        <div className="col-12">
+                            <input
+                                required
+                                type="email"
+                                className="form-control"
+                                name="email"
+                                placeholder="Почта"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                onKeyDown={e => correctInput(e)}
+                            />
+                        </div>
                         :
                         ''
                     }
-                    <div className="password__input">
+                    <div className="password__input col-12">
                         <input
                             required
                             type={typePass}
-                            className="form-control password"
+                            className="form-control"
                             name="pass"
                             placeholder="Пароль"
                             value={password}
@@ -99,25 +101,35 @@ const Auth = observer(() => {
                         <img onClick={passOnView} src={passView ? 'img/no-view.svg' : 'img/view.svg'} className="password__control" alt="view"></img>
                     </div>
                     {error ?
-                        <div style={{ color: "red", marginTop: "5px" }}>
+                        <div className="text-center text-danger">
                             {error}
                         </div>
                         :
                         ''
                     }
-                    <input
-                        type="button"
-                        value={isLogin ? 'вход' : 'зарегистрироваться'}
-                        onClick={click}
-                    />
+                    <div className="col-4">
+                        <NavLink to={MAIN_ROUTE}>
+                            <a className="form-control btn btn-outline-secondary">
+                                Главная
+                            </a>
+                        </NavLink>
+                    </div>
+                    <div className="col-8">
+                        <input
+                            type="button"
+                            value={isLogin ? 'вход' : 'зарегистрироваться'}
+                            onClick={click}
+                            className="form-control btn btn-success"
+                        />
+                    </div>
                 </form>
                 {isLogin ?
-                    <p>
-                        У вас нет аккаунта? - <NavLink onClick={clearError} to={REGISTRATION_ROUTE}>зарегистрируйтесь</NavLink>!
+                    <p className="text-center">
+                        У вас нет аккаунта? - <NavLink className="text-decoration-none" onClick={clearError} to={REGISTRATION_ROUTE}>зарегистрируйтесь</NavLink>
                     </p>
                     :
-                    <p>
-                        У вас есть аккаунт? - <NavLink onClick={clearError} to={LOGIN_ROUTE}>авторизируйтесь</NavLink>!
+                    <p className="text-center">
+                        У вас есть аккаунт? - <NavLink className="text-decoration-none" onClick={clearError} to={LOGIN_ROUTE}>авторизируйтесь</NavLink>
                     </p>
                 }
             </div>
