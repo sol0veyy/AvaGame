@@ -2,9 +2,11 @@ const jwt = require('jsonwebtoken')
 
 module.exports = function (req, res, next) {
     if (req.method === "OPTIONS") {
+        console.log('middleware')
         next()
     }
     try {
+        console.log('middleware')
         const token = req.headers.authorization.split(' ')[1] // Bearer 
         if (!token) {
             return res.status(401).json({message: 'Не авторизован'})

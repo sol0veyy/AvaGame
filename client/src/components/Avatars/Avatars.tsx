@@ -9,8 +9,8 @@ import { toJS } from 'mobx';
 import { IAvatar } from '../../store/AvatarStore';
 
 interface IPropsAvatars {
-    textInput: string;
-    profile: boolean;
+    textInput?: string;
+    profile?: boolean;
 }
 
 const Avatars = observer(({ textInput, profile }: IPropsAvatars) => {
