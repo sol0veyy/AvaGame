@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Header from "./components/Header"
+import MainContent from "./components/MainContent/MainContent"
 
 export default function Main() {
     const [textInput, setText] = useState('')
@@ -9,7 +10,7 @@ export default function Main() {
     return (
         <div>
             <Header textInput={textInput} setText={setText} />
-            <div>Main Content</div>
+            <MainContent textInput={textInput} />
         </div>
     )
 }

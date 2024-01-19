@@ -1,0 +1,59 @@
+.delButton {
+    position: absolute;
+    visibility: hidden;
+    bottom: 10px;
+    left: 15px;
+    cursor: pointer;
+}
+
+.likes {
+    visibility: hidden;
+    position: absolute;
+    margin-top: 15px;
+}
+
+.avatarBlock:hover {
+    .delButton {
+        visibility: visible;
+    }
+
+    .likes {
+        visibility: visible;
+    }
+
+    .heart {
+        visibility: visible;
+    }
+
+    .download {
+        visibility: visible;
+    }
+
+    .picture {
+        filter: brightness(40%);
+    }
+}
+
+.heart {
+    visibility: hidden;
+    position: absolute;
+    bottom: 10px;
+    left: 60px;
+    cursor: pointer;
+}
+
+.heartRed {
+    background-color: red;
+}
+
+.download {
+    cursor: pointer;
+    visibility: hidden;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+}
+
+.red {
+    color: red;
+}

@@ -24,7 +24,6 @@ export default function RootLayout({
     useEffect(() => {
         check()
             .then((data: IUser) => {
-                console.log(data)
                 user.setUser(data);
                 user.setIsAuth(true);
             })

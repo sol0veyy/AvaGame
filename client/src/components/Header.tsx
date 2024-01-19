@@ -1,5 +1,5 @@
 import React from "react";
-import Search from "./Search/Search";
+import Search from "../../app/components/Search/Search";
 import ProfileButton from "./Button/ProfileButton";
 
 const Header = ({textInput, setText}) => {
