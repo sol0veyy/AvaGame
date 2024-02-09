@@ -1,5 +1,5 @@
 import React from "react";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import "./select.css"
 
 const Select = ({options, dataFilter, setDataFilter}) => {

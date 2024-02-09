@@ -3,8 +3,9 @@
 import './globals.css';
 import { IUser, IUserStore, UserStore } from "./store/UserStore";
 import { AvatarsStore, IAvatarsStore } from "./store/AvatarStore";
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { check } from '../src/http/userAPI';
+import Loading from './loading';
 
 interface IContext {
     user: IUserStore;
@@ -21,14 +22,21 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         check()
             .then((data: IUser) => {
                 user.setUser(data);
                 user.setIsAuth(true);
+                setIsLoading(false);
             })
             .catch(error => console.log(error))
     }, [user.isAuth]);
+
+    if (isLoading) {
+        return Loading();
+    }
 
     return (
         <html lang="en">

@@ -10,6 +10,7 @@ const ProfileButton = observer(() => {
     const [userImg, setUserImg] = useState('');
     const [login, setLogin] = useState('');
     const [textColAvatars, setTextColAvatars] = useState('');
+    const [isAuth, setIsAuth] = useState(false);
 
     const getNoun = (number: number, one: string, two: string, five: string) => {
         let n = Math.abs(number);
@@ -28,6 +29,7 @@ const ProfileButton = observer(() => {
     }
 
     useEffect(() => {
+        setIsAuth(user.isAuth);
         setTextColAvatars(user.user['publications'] + " " + getNoun(user.user['publications'], "аватарка", "аватарки", "аватарок"));
         setUserImg(user.user['img']);
         setLogin(user.user['login']);
@@ -35,10 +37,10 @@ const ProfileButton = observer(() => {
 
     return (
         <>
-            {user.isAuth ?
+            {isAuth ?
                 <div className="col d-flex justify-content-end gap-2">
                     <Link href={PROFILE_ROUTE}>
-                        <img className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
+                        <img suppressHydrationWarning className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
                     </Link>
                     <div className="d-flex flex-column">
                         <span>{login}</span>

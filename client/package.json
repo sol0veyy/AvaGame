@@ -19,6 +19,7 @@
     "mobx-react-lite": "^3.4.3",
     "next": "^14.0.4",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
@@ -28,7 +29,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "react-scripts start",
     "lint": "next lint"
   },
   "eslintConfig": {
