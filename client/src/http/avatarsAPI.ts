@@ -14,18 +14,30 @@ export const deleteAvatar = async (avatarId, userId) => {
 }
 
 export const setLikes = async (avatarId, userId) => {
-    const {data} = await $authHost.post('api/avatar/like', {avatarId, userId});
-    return data;
+    try {
+        const {data} = await $authHost.post('api/avatar/like', {avatarId, userId});
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 export const delLike = async (avatarId, userId) => {
-    const {data} = await $authHost.post('api/avatar/like/del', {avatarId, userId});
-    return data;
+    try {
+        const {data} = await $authHost.post('api/avatar/like/del', {avatarId, userId});
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 export const getLike = async (avatarId, userId) => {
-    const {data} = await $host.get('api/avatar/like/' + avatarId + "/" + userId);
-    return data;
+    try {
+        const {data} = await $host.get('api/avatar/like/' + avatarId + "/" + userId);
+        return data;
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 export const getByTag = async (tag) => {

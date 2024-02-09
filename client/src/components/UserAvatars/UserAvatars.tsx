@@ -1,26 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../..';
 import Avatar from '../Avatar/Avatar';
 import styles from './userAvatars.module.css';
 import ModalAccept from '../Modal/ModalAccept';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { IAvatar } from '../../store/AvatarStore';
+import { getUserAvatars } from '../../http/avatarsAPI';
 
 interface IPropsUserAvatars {
-    clickHeart: (avatar: IAvatar) => void;
     clickDownload: (avatar: IAvatar) => void;
 }
 
-const UserAvatars = observer(({ clickHeart, clickDownload }: IPropsUserAvatars) => {
-    const { user, avatars } = useContext(Context);
+const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
+    const { user } = useContext(Context);
+    const [loading, setLoading] = useState(true)
+    const [userAvatars, setUserAvatars] = useState<IAvatar[]>([])
     const [modalAccept, setModalAccept] = useState({
         active: false,
         avatar: {},
     });
-    const userAvatars = toJS(avatars.avatars)
-        .filter((avatar) => avatar.userId === user.user['id'])
-        .sort((a, b) => b.id - a.id);
+
+    useEffect(() => {
+        getUserAvatars(user.user.id)
+            .then((data) => {
+                setUserAvatars(data)
+                setLoading(false)
+            })
+            .catch((err) => console.log(err))
+    }, [user])
 
     const clickDel = (avatar: IAvatar) => {
         setModalAccept({
@@ -28,6 +35,12 @@ const UserAvatars = observer(({ clickHeart, clickDownload }: IPropsUserAvatars) 
             avatar: { ...avatar },
         });
     };
+
+    if (loading) {
+        return (
+            <div>Загрузка...</div>
+        );
+    }
 
     return (
         <>
@@ -37,7 +50,6 @@ const UserAvatars = observer(({ clickHeart, clickDownload }: IPropsUserAvatars) 
                         <Avatar
                             profile={true}
                             clickDel={clickDel}
-                            clickHeart={clickHeart}
                             clickDownload={clickDownload}
                             avatar={avatar}
                             key={avatar.id}

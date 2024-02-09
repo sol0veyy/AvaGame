@@ -1,33 +1,57 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./avatar.scss"
 import { Context } from "../..";
-import { IAvatar } from "../../store/AvatarStore";
+import { IAvatar, ILike } from "../../store/AvatarStore";
+import { delLike, getLike, setLikes } from "../../http/avatarsAPI";
 
 interface IPropsAvatar {
     clickDel?: (avatar: IAvatar) => void;
-    clickHeart: (avatar: IAvatar) => void;
     clickDownload: (avatar: IAvatar) => void;
     avatar: IAvatar;
     profile?: boolean;
 }
 
-const Avatar = ({ clickDel, clickHeart, clickDownload, avatar, profile }: IPropsAvatar) => {
+const Avatar = ({ clickDel, clickDownload, avatar, profile }: IPropsAvatar) => {
     const {user} = useContext(Context);
-    const likes = avatar.likes.filter(like => like.userId === user.user['id']);
-    let onLike;
 
-    if (likes.length !== 0) {
-        onLike = true;
-    } else {
-        onLike = false;
+    const [userAvatar, setUserAvatar] = useState(avatar)
+    const [onLike, setOnLike] = useState(false);
+
+    
+    useEffect(() => {
+        getLike(userAvatar.id, user.user.id)
+            .then(data => {
+                if (data) {
+                    setOnLike(true)
+                }
+            })
+            .catch(err => console.log(err))
+    }, [userAvatar])
+
+    const clickHeart = async () => {
+        if (!user.isAuth) {
+            console.log('unauthorized');
+            return;
+        }
+
+        let avatar = null;
+
+        if (onLike) {
+            avatar = await delLike(userAvatar.id, user.user.id);
+        } else {
+            avatar = await setLikes(userAvatar.id, user.user.id);
+        }
+
+        setOnLike(!onLike);
+        setUserAvatar(avatar);
     }
 
     return (
         <div className="avatarBlock d-flex flex-column align-items-center position-relative">
             <img className="picture" width={150} src={process.env.REACT_APP_API_URL + avatar.img} alt="avatar" />
-            <div className={`likes fs-3 ${onLike ? "red" : ""}`}>{avatar.likes.length}</div>
+            <div className={`likes fs-3 ${onLike ? "red" : ""}`}>{userAvatar.likes.length}</div>
             <div>
-                <svg onClick={() => clickHeart(avatar)} xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill={`${onLike ? 'red' : 'currentColor'}`} className="heart bi bi-heart-fill" viewBox="0 0 16 16">
+                <svg onClick={clickHeart} xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill={`${onLike ? 'red' : 'currentColor'}`} className="heart bi bi-heart-fill" viewBox="0 0 16 16">
                     <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
                 </svg>
             </div>

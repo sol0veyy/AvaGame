@@ -17,8 +17,8 @@
     "jwt-decode": "^3.1.2",
     "mobx": "^6.8.0",
     "mobx-react-lite": "^3.4.3",
-    "next": "^14.0.4",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
@@ -26,10 +26,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

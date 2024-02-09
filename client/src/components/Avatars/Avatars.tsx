@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Avatar from '../Avatar/Avatar';
-import { delLike, getAll, getByTag, setLikes } from '../../http/avatarsAPI';
+import { getAll, getByTag } from '../../http/avatarsAPI';
 import { Context } from '../..';
-import download from 'downloadjs';
 import UserAvatars from '../UserAvatars/UserAvatars';
 import { observer } from 'mobx-react-lite';
 import { toJS } from 'mobx';
 import { IAvatar } from '../../store/AvatarStore';
+import download from 'downloadjs'
 
 interface IPropsAvatars {
     textInput?: string;
@@ -30,52 +30,6 @@ const Avatars = observer(({ textInput, profile }: IPropsAvatars) => {
         }
     }, [textInput, avatars, selectedPage]);
 
-    const clickHeart = async (avatar: IAvatar) => {
-        // Проверка авторизации пользователя
-        if (!user.isAuth) {
-            console.log('unauthorized');
-            return;
-        }
-
-        const onLike = avatar['likes'].filter(
-            (like) => like.userId === user.user['id']
-        );
-        const newArrAvatars = toJS(avatars.avatars).filter(
-            (ava) => ava.id !== avatar.id
-        );
-        const newObjAvatar = {
-            ...avatar,
-            likes: [
-                ...avatar.likes.filter(
-                    (like) => like.userId !== user.user['id']
-                ),
-            ],
-        };
-
-        if (onLike.length) {
-            avatars.setAvatars([...newArrAvatars, newObjAvatar]);
-            await delLike(avatar.id, user.user['id']);
-        } else {
-            avatars.setAvatars([
-                ...newArrAvatars,
-                {
-                    ...newObjAvatar,
-                    likes: [
-                        ...newObjAvatar.likes,
-                        { 
-                            id: new Date().getSeconds(),
-                            avatarId: avatar.id, 
-                            userId: user.user['id'],
-                            createdAt: new Date().toISOString(),
-                            updatedAt: new Date().toISOString()
-                        },
-                    ],
-                },
-            ]);
-            await setLikes(avatar.id, user.user['id']);
-        }
-    };
-
     const clickDownload = async (avatar: IAvatar) => {
         download(process.env.REACT_APP_API_URL + '/' + avatar.img);
     };
@@ -90,7 +44,6 @@ const Avatars = observer(({ textInput, profile }: IPropsAvatars) => {
                             .sort((a, b) => b.id - a.id)
                             .map((avatar) => (
                                 <Avatar
-                                    clickHeart={clickHeart}
                                     clickDownload={clickDownload}
                                     avatar={avatar}
                                     key={avatar.id}
@@ -105,7 +58,6 @@ const Avatars = observer(({ textInput, profile }: IPropsAvatars) => {
                 </>
             ) : (
                 <UserAvatars
-                    clickHeart={clickHeart}
                     clickDownload={clickDownload}
                 />
             )}
