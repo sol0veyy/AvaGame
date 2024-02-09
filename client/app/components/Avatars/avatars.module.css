@@ -1,7 +1,0 @@
-.avatarsBlock {
-    display: grid;
-    padding: 0 40px 0 40px;
-    grid-template-columns: repeat(auto-fit, 200px);
-    justify-content: center;
-    gap: 20px;
-}

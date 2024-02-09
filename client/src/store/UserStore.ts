@@ -16,13 +16,22 @@ interface IUser {
     role: string;
 }
 
+const DefaultIUser = {
+    id: 0,
+    login: '',
+    email: '',
+    img: '',
+    publications: 0,
+    role: ''
+}
+
 class UserStore {
     isAuth: boolean;
     user: IUser;
 
     constructor() {
         this.isAuth = false;
-        this.user = null;
+        this.user = DefaultIUser;
         makeAutoObservable(this)  
     }
 

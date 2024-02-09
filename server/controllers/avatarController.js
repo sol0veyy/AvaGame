@@ -78,23 +78,32 @@ class AvatarController {
 
     async setLikes(req, res) {
         const { avatarId, userId } = req.body;
-        const avatarLikes = await AvatarLikes.create({ avatarId, userId });
-        return res.json(avatarLikes);
+
+        await AvatarLikes.create({ avatarId, userId });
+
+        const avatar = await getAvatar(avatarId);
+
+        return res.json(avatar);
     }
 
     async delLike(req, res) {
         const { avatarId, userId } = req.body;
-        const avatarLike = await AvatarLikes.destroy({
+
+        await AvatarLikes.destroy({
             where: { avatarId, userId },
         });
-        return res.json(avatarLike);
+
+        const avatar = await getAvatar(avatarId);
+
+        return res.json(avatar);
     }
 
     async getLike(req, res) {
         const { avatarId, userId } = req.params;
-        const avatarLike = await AvatarLikes.findAll({
+        const avatarLike = await AvatarLikes.findOne({
             where: { avatarId, userId },
         });
+
         return res.json(avatarLike);
     }
 
@@ -159,6 +168,24 @@ class AvatarController {
         });
         return res.json(avatars);
     }
+}
+
+async function getAvatar(avatarId) {
+    const avatar = await Avatar.findByPk(avatarId, {
+        order: [['id', 'DESC']],
+        include: [
+            {
+                model: AvatarTag,
+                as: 'tags',
+            },
+            {
+                model: AvatarLikes,
+                as: 'likes',
+            },
+        ],
+    });
+    
+    return avatar;
 }
 
 module.exports = new AvatarController();

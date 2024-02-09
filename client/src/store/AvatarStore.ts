@@ -48,5 +48,6 @@ class AvatarsStore {
 export {
     IAvatarsStore,
     IAvatar,
-    AvatarsStore
+    AvatarsStore,
+    ILike
 }
