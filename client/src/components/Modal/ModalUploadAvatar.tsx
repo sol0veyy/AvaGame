@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
-import jwt_decode from "jwt-decode";
 import { createAvatar } from "../../http/avatarsAPI";
 import Modal from "./Modal";
 import { Context } from '../..';
@@ -40,20 +39,19 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
                 const regular = /#|\s#/
                 const arrTags = tags.split(regular).filter(el => el !== '');
                 const formData = new FormData();
-                formData.append('userId', `${user.user.id}`);
+                formData.append('userId', `${user.id}`);
                 formData.append('categoryId', "2");
                 formData.append('img', file);
                 formData.append('tags', JSON.stringify(arrTags));
-                createAvatar(formData, user.user).then(data => {
+                createAvatar(formData, user).then(data => {
                     avatars.setAvatars(data);
                     setModalActive(false);
                 });
                 setViewImg(false);
-                user.setUser({...user.user, publications: user.user['publications'] + 1})
+                user.setUser({...user, publications: user.publications + 1})
+                
             } else {
                 setErrorImg("Фото не соответсвует требованиям!");
-                console.log(errorImg);
-                return;
             }
         }
     }

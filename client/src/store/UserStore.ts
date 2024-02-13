@@ -1,10 +1,12 @@
 import { makeAutoObservable } from 'mobx'
+import { IAvatar } from './AvatarStore';
 
-interface IUserStore {
+interface IUserStore extends IUser {
     isAuth: boolean;
-    user: IUser;
+    avatars: IAvatar[];
     setIsAuth: (bool: boolean) => void;
     setUser: (user: IUser) => void;
+    logOut: () => void;
 }
 
 interface IUser {
@@ -16,22 +18,26 @@ interface IUser {
     role: string;
 }
 
-const DefaultIUser = {
+const user_default: IUser = {
     id: 0,
     login: '',
     email: '',
     img: '',
     publications: 0,
-    role: ''
+    role: '',
 }
 
 class UserStore {
-    isAuth: boolean;
-    user: IUser;
+    isAuth = false;
+    id = 0;
+    login = '';
+    email = '';
+    img = '';
+    publications = 0;
+    role = '';
+    avatars: IAvatar[] = [];
 
     constructor() {
-        this.isAuth = false;
-        this.user = DefaultIUser;
         makeAutoObservable(this)  
     }
 
@@ -39,7 +45,22 @@ class UserStore {
         this.isAuth = bool
     }
     setUser(user: IUser) {
-        this.user = user
+        this.id = user.id;
+        this.login = user.login;
+        this.email = user.email;
+        this.img = user.img;
+        this.publications = user.publications;
+        this.role = user.role;
+    }
+
+    logOut() {
+        this.isAuth = false;
+        this.id = user_default.id;
+        this.login = user_default.login;
+        this.email = user_default.email;
+        this.img = user_default.img;
+        this.publications = user_default.publications;
+        this.role = user_default.role;
     }
 }
 

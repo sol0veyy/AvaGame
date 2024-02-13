@@ -26,26 +26,6 @@
     align-items: center;
 }
 
-.acceptBtn {
-    display: flex;
-    margin-top: 10px;
-    gap: 10px;
-}
-
-.acceptBtn button {
-    border: 2px solid #0de23b;
-    background: #15171E;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    transition: background .2s ease-in-out;
-}
-
-.accept button:hover {
-    background: #15171E;
-}
-
 /* UploadAvatar */
 
 .upload_rules {

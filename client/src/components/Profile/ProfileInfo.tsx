@@ -17,29 +17,28 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProf
     const [publications, setPublications] = useState(0);
 
     const logOut = () => {
-        user.setUser(null);
-        user.setIsAuth(false);
+        user.logOut();
         localStorage.removeItem('token');
         navigate(MAIN_ROUTE);
     };
 
     useEffect(() => {
-        setPublications(user.user.publications);
-    }, [user.user]);
+        setPublications(user.publications);
+    }, [user]);
 
     return (
         <div className="profileInfo">
             <div className="infoBlock">
                 <img
                     src={
-                        user.user['img']
-                            ? process.env.REACT_APP_API_URL + user.user['img']
+                        user.img
+                            ? process.env.REACT_APP_API_URL + user.img
                             : `img/nonAvatar.jpg`
                     }
                     className="avatar"
                     alt="avatar"
                 />
-                <span className="nickname">{user.user['login']}</span>
+                <span className="nickname">{user.login}</span>
                 <span className="col-avatar">
                     Количество аватарок - {publications}
                 </span>

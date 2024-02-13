@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Context } from '../..';
+import { Context } from '../../..';
 import Avatar from '../Avatar/Avatar';
 import styles from './userAvatars.module.css';
-import ModalAccept from '../Modal/ModalAccept';
+import ModalAccept from '../../Modal/ModalAccept';
 import { observer } from 'mobx-react-lite';
-import { IAvatar } from '../../store/AvatarStore';
-import { getUserAvatars } from '../../http/avatarsAPI';
+import { IAvatar } from '../../../store/AvatarStore';
+import { getUserAvatars } from '../../../http/avatarsAPI';
 
 interface IPropsUserAvatars {
     clickDownload: (avatar: IAvatar) => void;
@@ -21,7 +21,7 @@ const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
     });
 
     useEffect(() => {
-        getUserAvatars(user.user.id)
+        getUserAvatars(user.id)
             .then((data) => {
                 setUserAvatars(data)
                 setLoading(false)

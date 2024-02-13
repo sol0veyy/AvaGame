@@ -9,16 +9,14 @@
 }
 
 .block {
-    border: 2px solid #0de23b;
+    font-size: 1rem;
+    border: 2px solid #444a52;
     padding: 5px 15px;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .blockSelected {
-    border: 2px solid #0de23b;
-    padding: 5px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #0de23b;
+    border: 2px solid #34393f;
+    color: #757d86;
 }

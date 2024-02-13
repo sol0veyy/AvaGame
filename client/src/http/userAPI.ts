@@ -26,7 +26,7 @@ export const check = async () => {
 
         return jwt_decode(data.token)
     } catch(error) {
-        throw error.response;
+        throw new Error(error);
     }
 }
 

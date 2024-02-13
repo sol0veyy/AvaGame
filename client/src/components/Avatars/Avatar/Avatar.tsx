@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./avatar.scss"
-import { Context } from "../..";
-import { IAvatar, ILike } from "../../store/AvatarStore";
-import { delLike, getLike, setLikes } from "../../http/avatarsAPI";
+import { Context } from "../../..";
+import { IAvatar } from "../../../store/AvatarStore";
+import { delLike, getLike, setLikes } from "../../../http/avatarsAPI";
 
 interface IPropsAvatar {
     clickDel?: (avatar: IAvatar) => void;
@@ -16,17 +16,16 @@ const Avatar = ({ clickDel, clickDownload, avatar, profile }: IPropsAvatar) => {
 
     const [userAvatar, setUserAvatar] = useState(avatar)
     const [onLike, setOnLike] = useState(false);
-
     
     useEffect(() => {
-        getLike(userAvatar.id, user.user.id)
+        getLike(userAvatar.id, user.id)
             .then(data => {
                 if (data) {
                     setOnLike(true)
                 }
             })
             .catch(err => console.log(err))
-    }, [userAvatar])
+    }, [userAvatar, user])
 
     const clickHeart = async () => {
         if (!user.isAuth) {
@@ -37,9 +36,9 @@ const Avatar = ({ clickDel, clickDownload, avatar, profile }: IPropsAvatar) => {
         let avatar = null;
 
         if (onLike) {
-            avatar = await delLike(userAvatar.id, user.user.id);
+            avatar = await delLike(userAvatar.id, user.id);
         } else {
-            avatar = await setLikes(userAvatar.id, user.user.id);
+            avatar = await setLikes(userAvatar.id, user.id);
         }
 
         setOnLike(!onLike);

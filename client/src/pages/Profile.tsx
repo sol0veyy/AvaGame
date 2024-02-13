@@ -4,7 +4,8 @@ import "../css/profile.css"
 import ModalUploadAvatar from "../components/Modal/ModalUploadAvatar";
 import ChangeSettings from "../components/Modal/ChangeSettings";
 import jwtDecode from "jwt-decode";
-import Avatars from "../components/Avatars/Avatars";
+import UserAvatars from "../components/Avatars/UserAvatars/UserAvatars";
+import { clickDownload } from "../components/Avatars/functions";
 
 const Profile = () => {
     const infoUser = jwtDecode(localStorage.getItem("token"));
@@ -15,7 +16,7 @@ const Profile = () => {
     return (
         <div className="profile">
             <ProfileInfo setUploadActive={setUploadActive} setSettingsActive={setSettingsActive} />
-            <Avatars profile={true} />
+            <UserAvatars clickDownload={clickDownload} />
             <ModalUploadAvatar modalActive={uploadActive} setModalActive={setUploadActive} />
             <ChangeSettings infoUser={infoUser} modalActive={settingsActive} setModalActive={setSettingsActive} />
         </div>

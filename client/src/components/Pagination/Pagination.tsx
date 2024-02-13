@@ -1,10 +1,10 @@
 import React from 'react';
 import PaginationBlock from './PaginationBlock';
-import styles from './pagination.module.css';
+import './pagination.css';
 
 const Pagination = ({ pages, selectedPage, setPage }) => {
     return (
-        <div className={styles.pagination}>
+        <div className='pagination'>
             {pages.map((page) => (
                 <PaginationBlock
                     key={page}
