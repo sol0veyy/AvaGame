@@ -4,7 +4,13 @@ import { Context } from "../..";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
 import { observer } from "mobx-react-lite";
 
-const ProfileButton = observer(() => {
+import "./profileButton.scss";
+
+interface IProfileButton {
+    className?: string;
+}
+
+const ProfileButton = observer(({ className }: IProfileButton) => {
     const { user } = useContext(Context);
  
     const [userImg, setUserImg] = useState('');
@@ -36,19 +42,19 @@ const ProfileButton = observer(() => {
     }, [user])
 
     return (
-        <>
+        <div className={`${className} col`}>
             {user.isAuth ?
-                <div className="col d-flex justify-content-end gap-2">
+                <div className="d-flex justify-content-lg-end">
                     <NavLink to={PROFILE_ROUTE}>
                         <img className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
                     </NavLink>
-                    <div className="d-flex flex-column">
+                    <div className="d-flex justify-content-around flex-column mx-2">
                         <span>{login}</span>
-                        <span className="text-white-50">{textColAvatars}</span>
+                        <span className="col__avatars text-white-50">{textColAvatars}</span>
                     </div>
                 </div>
                 :
-                <div className=" col d-flex gap-2 justify-content-end">
+                <div className="d-flex gap-2 justify-content-lg-end">
                     <NavLink to={REGISTRATION_ROUTE}>
                         <button className="btn btn-outline-secondary">Регистрация</button>
                     </NavLink>
@@ -57,7 +63,7 @@ const ProfileButton = observer(() => {
                     </NavLink>
                 </div>
             }
-        </>
+        </div>
     )
 })
 

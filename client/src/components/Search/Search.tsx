@@ -1,6 +1,6 @@
-const Search = ({textInput, setText}) => {
+const Search = ({textInput, setText, className}) => {
     return (
-        <form className="d-flex col-4" role="search">
+        <form className={`${className} d-flex col-4`} role="search">
             <input 
                 value={textInput}
                 onChange={event => setText(event.target.value)}
@@ -10,7 +10,6 @@ const Search = ({textInput, setText}) => {
                 aria-label="Search"
                 id="mySearch" 
             />
-            {/* <button className="btn btn-outline-success" type="submit">Найти</button> */}
         </form>
     )
 }
