@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProfileInfo from "../components/Profile/ProfileInfo";
-import "../css/profile.css"
+import "../css/profile.scss"
 import ModalUploadAvatar from "../components/Modal/ModalUploadAvatar";
 import ChangeSettings from "../components/Modal/ChangeSettings";
 import jwtDecode from "jwt-decode";

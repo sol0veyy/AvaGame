@@ -30,7 +30,7 @@ const Avatars = observer(({ textInput, profile }: IPropsAvatars) => {
 
     return (
         <>
-            <div className="d-flex gap-4 px-5 justify-content-center mt-5">
+            <div className="d-flex gap-4 mx-5">
                 {
                 (avatars ? [...avatars] : [])
                     .sort((a, b) => b.id - a.id)
