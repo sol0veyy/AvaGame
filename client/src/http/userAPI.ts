@@ -35,3 +35,9 @@ export const update = async (userId) => {
     localStorage.setItem("token", data.token);
     return jwt_decode(data.token);
 }
+
+export const getAllUsers = async () => {
+    const {data} = await $authHost.get('api/user/all');
+
+    return data;
+}
