@@ -46,7 +46,7 @@ const Avatar = ({ clickDel, clickDownload, avatar, profile }: IPropsAvatar) => {
     }
 
     return (
-        <div className="avatarBlock d-flex flex-column align-items-center position-relative">
+        <div className="avatarBlock d-flex flex-column align-items-center align-self-start position-relative">
             <img className="picture" width={150} src={process.env.REACT_APP_API_URL + avatar.img} alt="avatar" />
             <div className={`likes fs-3 ${onLike ? "red" : ""}`}>{userAvatar.likes.length}</div>
             <div>
