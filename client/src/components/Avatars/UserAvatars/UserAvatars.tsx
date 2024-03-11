@@ -12,9 +12,8 @@ interface IPropsUserAvatars {
 }
 
 const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
-    const { user } = useContext(Context);
+    const { user, avatars } = useContext(Context);
     const [loading, setLoading] = useState(true)
-    const [userAvatars, setUserAvatars] = useState<IAvatar[]>([])
     const [modalAccept, setModalAccept] = useState({
         active: false,
         avatar: {},
@@ -23,11 +22,11 @@ const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
     useEffect(() => {
         getUserAvatars(user.id)
             .then((data) => {
-                setUserAvatars(data)
+                avatars.setUserAvatars(data)
                 setLoading(false)
             })
             .catch((err) => console.log(err))
-    }, [user])
+    }, [user, avatars])
 
     const clickDel = (avatar: IAvatar) => {
         setModalAccept({
@@ -44,9 +43,9 @@ const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
 
     return (
         <>
-            {userAvatars[0] ? (
+            {avatars.getUserAvatars()[0] ? (
                 <div className={styles.avatarsBlockProfile}>
-                    {userAvatars.map((avatar) => (
+                    {avatars.getUserAvatars().map((avatar) => (
                         <Avatar
                             profile={true}
                             clickDel={clickDel}

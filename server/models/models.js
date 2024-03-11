@@ -1,5 +1,5 @@
 const sequelize = require('../db')
-const {DataTypes} = require('sequelize')
+const {DataTypes, Sequelize} = require('sequelize')
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -8,17 +8,20 @@ const User = sequelize.define('user', {
     password: {type: DataTypes.STRING},
     publications: {type: DataTypes.INTEGER, defaultValue: 0},
     subscribers: {type: DataTypes.INTEGER, defaultValue: 0},
-    img: {type: DataTypes.STRING, defaultValue: ''}, // TODO
+    img: {type: DataTypes.STRING, defaultValue: 'img/nonAvatar.jpg'},
     role: {type: DataTypes.STRING, defaultValue: 'USER'}
 })
 
-const Subscriber = sequelize.define('subscriber', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
-})
-
-const Followers = sequelize.define('followers', {
+const UserFollower = sequelize.define('user_followers', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    // user_id, subscriber_id (user)
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    followerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
 })
 
 const UserComment = sequelize.define('user_comment', {
@@ -54,14 +57,17 @@ const AvatarPublished = sequelize.define('avatar_published', {
     // avatar_id
 })
 
-User.hasOne(Subscriber)
-Subscriber.belongsTo(User)
+User.belongsToMany(User, {
+    as: 'Followers',
+    foreignKey: 'userId',
+    through: UserFollower
+})
 
-User.hasOne(Followers)
-Followers.belongsTo(User)
-
-Subscriber.hasMany(Followers)
-Followers.belongsTo(Subscriber)
+User.belongsToMany(User, {
+    as: 'Following',
+    foreignKey: 'followerId',
+    through: UserFollower
+})
 
 User.hasMany(UserComment)
 UserComment.belongsTo(User)
@@ -83,8 +89,7 @@ AvatarPublished.belongsTo(Avatar)
 
 module.exports = {
     User,
-    Subscriber,
-    Followers,
+    UserFollower,
     UserComment,
     Avatar,
     AvatarLikes,

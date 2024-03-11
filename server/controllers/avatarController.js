@@ -18,7 +18,8 @@ class AvatarController {
             const fileName = uuid.v4() + '.jpg';
             img.mv(path.resolve(__dirname, '..', 'static', fileName));
             const avatar = await Avatar.create({ userId, img: fileName });
-            const allAvatar = await Avatar.findAll({
+            const userAvatars = await Avatar.findAll({
+                where: {userId},
                 order: [['id', 'DESC']],
                 include: [
                     {
@@ -44,7 +45,7 @@ class AvatarController {
                 });
             }
 
-            return res.json(allAvatar);
+            return res.json(userAvatars);
         } catch (e) {
             next(ApiError.badRequest(e.message));
         }
@@ -60,7 +61,8 @@ class AvatarController {
         });
         const user = await User.findByPk(userId);
         await user.update({ publications: user.publications - 1 });
-        const avatar = await Avatar.findAll({
+        const userAvatars = await Avatar.findAll({
+            where: {userId},
             order: [['id', 'DESC']],
             include: [
                 {
@@ -73,7 +75,7 @@ class AvatarController {
                 },
             ],
         });
-        return res.json(avatar);
+        return res.json(userAvatars);
     }
 
     async setLikes(req, res) {

@@ -8,11 +8,16 @@ const ModalAccept = ({modalAccept, setModalAccept}) => {
     const {user, avatars} = useContext(Context)
 
     const delAvatar = async (avatar) => {
-        deleteAvatar(avatar.id, user.id).then((data) => {
-            avatars.setAvatars([...data]);
-            setModalAccept({active: false});
-        });
-        user.setUser({...user, publications: user.publications - 1})
+        deleteAvatar(avatar.id, user.id)
+            .then((data) => {
+                avatars.setUserAvatars([...data]);
+                user.setUser({...user, publications: user.publications - 1})
+                
+                setModalAccept({active: false});
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     }
 
     return (

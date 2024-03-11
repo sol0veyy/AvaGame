@@ -44,11 +44,11 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
                 formData.append('img', file);
                 formData.append('tags', JSON.stringify(arrTags));
                 createAvatar(formData, user).then(data => {
-                    avatars.setAvatars(data);
+                    avatars.setUserAvatars(data);
+                    user.setUser({...user, publications: user.publications + 1});
                     setModalActive(false);
                 });
                 setViewImg(false);
-                user.setUser({...user, publications: user.publications + 1})
                 
             } else {
                 setErrorImg("Фото не соответсвует требованиям!");

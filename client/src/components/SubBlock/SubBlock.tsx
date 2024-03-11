@@ -24,7 +24,7 @@ const SubBlock = () => {
             </form>
             <div>
                 {users.map((user) => (
-                    <UserBlock key={user.id} user={user} />
+                    <UserBlock key={user.id} otherUser={user} />
                 ))}
             </div>
         </div>

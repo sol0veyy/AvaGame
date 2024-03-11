@@ -8,10 +8,9 @@ import Pagination from '../Pagination/Pagination';
 
 interface IPropsAvatars {
     textInput?: string;
-    profile?: boolean;
 }
 
-const Avatars = observer(({ textInput, profile }: IPropsAvatars) => {
+const Avatars = observer(({ textInput }: IPropsAvatars) => {
     const [avatars, setAvatars] = useState<IAvatar[]>([]);
     const [pages, setPages] = useState([]);
     const [selectedPage, setPage] = useState(1);

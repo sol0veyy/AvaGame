@@ -1,8 +1,10 @@
 import { makeAutoObservable } from "mobx"
 
 interface IAvatarsStore {
-    avatars: IAvatar[];
     setAvatars: (avatars: IAvatar[]) => void;
+    getAll: () => IAvatar[];
+    setUserAvatars: (avatars: IAvatar[]) => void;
+    getUserAvatars: () => IAvatar[];
 }
 
 interface IAvatar {
@@ -34,7 +36,8 @@ interface ITag {
 }
 
 class AvatarsStore {
-    avatars: IAvatar[];
+    private avatars: IAvatar[];
+    private userAvatars: IAvatar[]
     constructor() {
         this.avatars = null;
         makeAutoObservable(this)
@@ -42,6 +45,18 @@ class AvatarsStore {
 
     setAvatars(avatars: IAvatar[]) {
         this.avatars = avatars;
+    }
+
+    getAll() {
+        return this.avatars;
+    }
+
+    setUserAvatars(avatars: IAvatar[]) {
+        this.userAvatars = avatars;
+    }
+
+    getUserAvatars() {
+        return this.userAvatars;
     }
 }
 

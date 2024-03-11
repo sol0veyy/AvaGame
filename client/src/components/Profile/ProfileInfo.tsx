@@ -14,17 +14,11 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProf
     const navigate = useNavigate();
     const { user } = useContext(Context);
 
-    const [publications, setPublications] = useState(0);
-
     const logOut = () => {
         user.logOut();
         localStorage.removeItem('token');
         navigate(MAIN_ROUTE);
     };
-
-    useEffect(() => {
-        setPublications(user.publications);
-    }, [user]);
 
     return (
         <div className="profileInfo">
@@ -40,7 +34,7 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProf
                 />
                 <span className="nickname">{user.login}</span>
                 <span className="col-avatar">
-                    Количество аватарок - {publications}
+                    Количество аватарок - {user.publications}
                 </span>
                 <button
                     className="w-75 btn btn-outline-primary"
