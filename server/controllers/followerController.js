@@ -1,29 +1,58 @@
+const { where } = require("sequelize")
+const ApiError = require("../error/ApiError")
 const { UserFollower, User } = require("../models/models")
 
 class FollowerController {
-    async follow(req, res) {
+    async follow(req, res, next) {
         const { followerId, userId } = req.body
 
-        const follower = await UserFollower.create({followerId, userId})
+        try {
+            const follower = await UserFollower.create({followerId, userId})
 
-        return res.json({follower})
+            return res.json({follower})
+        } catch {
+            return next(ApiError.badRequest('Ошибка при подписке'))
+        }
+
     }
 
-    async unfollow(req, res) {
-        const { followerId } = req.body
+    async unfollow(req, res, next) {
+        const { followerId, userId } = req.params
 
-        const follower = await UserFollower.findByPk(followerId)
-        await follower.destroy()
-
-        return res.json({follower})
+        try {
+            const follower = await UserFollower.findOne({where: {followerId, userId}})
+            await follower.destroy()
+    
+            return res.json({follower})
+        } catch {
+            return next(ApiError.badRequest('Ошибка при отписке'))
+        }
     }
 
     async getIsUserFollow(req, res) {
-        const { followerId, userId } = req.body
+        const { followerId, userId } = req.params
 
-        const isFollow = await Boolean(UserFollower.findOne({where: {followerId, userId}}))
+        const isFollow = await UserFollower.findOne({where: {followerId, userId}})
 
-        return res.json({isFollow})
+        return res.json({isFollow: Boolean(isFollow)})
+    }
+
+    async getAllUserSubs(req, res, next) {
+        const {followerId} = req.params
+
+        try {
+            const userSubs = await UserFollower.findAll({where: {followerId}});
+
+            const usersId = userSubs.map((userSub) => userSub.userId);
+
+            const users = await User.findAll({
+                where: {id: usersId}
+            });
+
+            return res.json({users})
+        } catch {
+            next(ApiError.badRequest('Ошибка при получении подписок'))
+        }
     }
 }
 
