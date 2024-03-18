@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import './profile.css';
+import React, { useContext } from 'react';
+import '../profile.css';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_ROUTE } from '../../utils/consts';
-import { Context } from '../..';
+import { MAIN_ROUTE } from '../../../utils/consts';
 import { observer } from 'mobx-react-lite';
+import { Context } from '../../..';
 
 interface IPropsProfileInfo {
     setUploadActive: (active: boolean) => void;
@@ -12,7 +12,7 @@ interface IPropsProfileInfo {
 
 const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProfileInfo) => {
     const navigate = useNavigate();
-    const { user } = useContext(Context);
+    const {user} = useContext(Context);
 
     const logOut = () => {
         user.logOut();
@@ -24,11 +24,7 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProf
         <div className="profileInfo">
             <div className="infoBlock">
                 <img
-                    src={
-                        user.img
-                            ? process.env.REACT_APP_API_URL + user.img
-                            : `img/nonAvatar.jpg`
-                    }
+                    src={process.env.REACT_APP_API_URL + user.img}
                     className="avatar"
                     alt="avatar"
                 />

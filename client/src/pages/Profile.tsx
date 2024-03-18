@@ -1,26 +1,44 @@
-import React, { useState } from "react";
-import ProfileInfo from "../components/Profile/ProfileInfo";
-import "../css/profile.scss"
-import ModalUploadAvatar from "../components/Modal/ModalUploadAvatar";
-import ChangeSettings from "../components/Modal/ChangeSettings";
-import jwtDecode from "jwt-decode";
+import React, { useContext, useEffect, useState } from "react";
+import "../css/profile.scss";
 import UserAvatars from "../components/Avatars/UserAvatars/UserAvatars";
 import { clickDownload } from "../components/Avatars/functions";
+import { useParams } from "react-router-dom";
+import { getUserByLogin } from "../http/userAPI";
+import { IUser } from "../store/UserStore";
+import { Context } from "..";
+import UserProfile from "../components/Profile/UserProfile/UserProfile";
+import ViewProfile from "../components/Profile/ViewProfile/ViewProfile";
 
 const Profile = () => {
-    const infoUser = jwtDecode(localStorage.getItem("token"));
+    const {user} = useContext(Context);
+    const {login} = useParams();
 
-    const [uploadActive, setUploadActive] = useState(false);
-    const [settingsActive, setSettingsActive] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [profileUser, setProfileUser] = useState<IUser>();
+
+    useEffect(() => {
+        getUserByLogin(login)
+            .then(user => {
+                setProfileUser(user);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, []);
 
     return (
         <div className="profile">
-            <ProfileInfo setUploadActive={setUploadActive} setSettingsActive={setSettingsActive} />
-            <UserAvatars clickDownload={clickDownload} />
-            <ModalUploadAvatar modalActive={uploadActive} setModalActive={setUploadActive} />
-            <ChangeSettings infoUser={infoUser} modalActive={settingsActive} setModalActive={setSettingsActive} />
+            {!isLoading ? (
+                <>
+                    {user.id === profileUser.id ? <UserProfile /> : <ViewProfile profileUser={profileUser} />}
+                    <UserAvatars profileUser={profileUser} clickDownload={clickDownload} />
+                </>
+            ) : null}
         </div>
-    )
-}
+    );
+};
 
 export default Profile;

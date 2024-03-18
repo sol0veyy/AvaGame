@@ -51,3 +51,13 @@ export const getAllUsersByFilter = async (findText: string) => {
         console.log(error);
     }
 };
+
+export const getUserByLogin = async (login: string) => {
+    try {
+        const {data} = await $host.get(`api/user/${login}`);
+
+        return data.user;
+    } catch (error) {
+        console.log(error);
+    }
+};

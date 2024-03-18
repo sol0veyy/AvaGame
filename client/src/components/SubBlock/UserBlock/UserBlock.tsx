@@ -4,6 +4,8 @@ import { Context } from "../../..";
 import { follow, getIsUserFollow, unfollow } from "../../../http/followerAPI";
 import { IUser } from "../../../store/UserStore";
 import { getNoun } from "../../Button/ProfileButton";
+import { useNavigate } from "react-router-dom";
+import { PROFILE_ROUTE } from "../../../utils/consts";
 
 interface IUserBlock {
     otherUser: IUser;
@@ -11,6 +13,7 @@ interface IUserBlock {
 
 const UserBlock = ({ otherUser }: IUserBlock) => {
     const { user } = useContext(Context);
+    const navigate = useNavigate();
     const isThisUser = user.id === otherUser.id;
     const [isLoading, setIsLoading] = useState(true);
     const [isFollow, setIsFollow] = useState(false);
@@ -42,17 +45,25 @@ const UserBlock = ({ otherUser }: IUserBlock) => {
 
     return (
         <div className="user__block d-flex mb-3">
-            <img className="user__avatar" src={process.env.REACT_APP_API_URL + otherUser.img} alt="avatar" width={50} height={50} />
+            <button 
+                className="p-0 btn__reset"
+                onClick={() => navigate(`${otherUser.login + PROFILE_ROUTE}`)}
+            >
+                <img className="user__avatar" src={process.env.REACT_APP_API_URL + otherUser.img} alt="avatar" width={50} height={50} />
+            </button>
             <div className="d-flex justify-content-between w-100">
-                <div className="d-flex flex-column justify-content-around mx-2">
-                    <span className="user__login">{otherUser.login}</span>
+                <div className="d-flex flex-column justify-content-around align-items-start mx-2">
+                    <button 
+                        className="user__login btn__reset"
+                        onClick={() => navigate(`${otherUser.login + PROFILE_ROUTE}`)}
+                    >{otherUser.login}</button>
                     <span className="user__colAvatars text-secondary">{otherUser.publications + " " + getNoun(otherUser.publications, "аватарка", "аватарки", "аватарок")}</span>
                 </div>
                 {isThisUser ? (
                     <span className="text-success align-self-center">Это вы!</span>       
                 ) : (
                     <button 
-                        className="p-0 align-self-center"
+                        className="p-0 align-self-center btn__reset"
                         onClick={follow_unfollow}
                     >
                         {!isLoading ?

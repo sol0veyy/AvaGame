@@ -137,6 +137,20 @@ class UserController {
             next(ApiError.badRequest('Ошибка при получении пользователей'));
         }
     }
+
+    async getUserByLogin(req, res, next) {
+        const {login} = req.params;
+
+        try {
+            const user = await User.findOne({
+                where: {login}
+            });
+
+            return res.json({user});
+        } catch {
+            next(ApiError.badRequest('Не удалось получить пользователя'));
+        }
+    }
 }
 
 module.exports = new UserController()

@@ -45,7 +45,7 @@ const ProfileButton = observer(({ className }: IProfileButton) => {
         <div className={`${className} col`}>
             {user.isAuth ?
                 <div className="d-flex justify-content-lg-end">
-                    <NavLink to={PROFILE_ROUTE}>
+                    <NavLink to={`/${user.login + PROFILE_ROUTE}`}>
                         <img className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
                     </NavLink>
                     <div className="d-flex justify-content-around flex-column mx-2">

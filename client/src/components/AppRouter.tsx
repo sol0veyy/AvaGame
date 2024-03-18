@@ -5,7 +5,7 @@ import { authRoutes, publicRoutes } from "../routes";
 import { MAIN_ROUTE } from "../utils/consts";
 
 const AppRouter = () => {
-    const {user} = useContext(Context)
+    const {user} = useContext(Context);
     
     return (
         <Routes>
@@ -17,7 +17,7 @@ const AppRouter = () => {
             )}
             <Route path="*" element={<Navigate to={MAIN_ROUTE}/>} />
         </Routes>
-    )
-}
+    );
+};
 
 export default AppRouter;

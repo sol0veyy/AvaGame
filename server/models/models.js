@@ -8,7 +8,7 @@ const User = sequelize.define('user', {
     password: {type: DataTypes.STRING},
     publications: {type: DataTypes.INTEGER, defaultValue: 0},
     subscribers: {type: DataTypes.INTEGER, defaultValue: 0},
-    img: {type: DataTypes.STRING, defaultValue: 'img/nonAvatar.jpg'},
+    img: {type: DataTypes.STRING, defaultValue: 'nonAvatar.jpg'},
     role: {type: DataTypes.STRING, defaultValue: 'USER'}
 })
 

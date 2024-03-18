@@ -6,27 +6,29 @@ import ModalAccept from '../../Modal/ModalAccept';
 import { observer } from 'mobx-react-lite';
 import { IAvatar } from '../../../store/AvatarStore';
 import { getUserAvatars } from '../../../http/avatarsAPI';
+import { IUser } from '../../../store/UserStore';
 
 interface IPropsUserAvatars {
+    profileUser: IUser;
     clickDownload: (avatar: IAvatar) => void;
 }
 
-const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
+const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars) => {
     const { user, avatars } = useContext(Context);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [modalAccept, setModalAccept] = useState({
         active: false,
         avatar: {},
     });
 
     useEffect(() => {
-        getUserAvatars(user.id)
+        getUserAvatars(profileUser.id)
             .then((data) => {
-                avatars.setUserAvatars(data)
-                setLoading(false)
+                avatars.setUserAvatars(data);
+                setLoading(false);
             })
-            .catch((err) => console.log(err))
-    }, [user, avatars])
+            .catch((err) => console.log(err));
+    }, [user, avatars]);
 
     const clickDel = (avatar: IAvatar) => {
         setModalAccept({
@@ -47,7 +49,7 @@ const UserAvatars = observer(({ clickDownload }: IPropsUserAvatars) => {
                 <div className={styles.avatarsBlockProfile}>
                     {avatars.getUserAvatars().map((avatar) => (
                         <Avatar
-                            profile={true}
+                            profile={user.id === profileUser.id}
                             clickDel={clickDel}
                             clickDownload={clickDownload}
                             avatar={avatar}

@@ -33,11 +33,11 @@ const SubBlock = () => {
         <div className="sub__block d-flex flex-column gap-3 bg-body-tertiary">
             <div className="d-flex gap-3">
                 <button
-                    className={`${isActiveBlockMySubs ? 'btn__active' : ''}`}
+                    className={`${isActiveBlockMySubs ? 'btn__active' : ''} btn__sub__block`}
                     onClick={openBlockMySubs}
                 >Мои подписки</button>
                 <button 
-                    className={`${isActiveBlockAllUsers ? 'btn__active' : ''}`}
+                    className={`${isActiveBlockAllUsers ? 'btn__active' : ''} btn__sub__block`}
                     onClick={openBlockAllUsers}
                 >Все пользователи</button>
             </div>

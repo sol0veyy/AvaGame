@@ -9,9 +9,9 @@ interface IContext {
   avatars: IAvatarsStore;
 }
 
-export const Context = createContext<IContext>(null)
+export const Context = createContext<IContext>(null);
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const user: IUserStore = new UserStore();
 const avatars: IAvatarsStore = new AvatarsStore();

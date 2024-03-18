@@ -4,11 +4,8 @@ import Profile from "./pages/Profile";
 import { LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE } from "./utils/consts";
 
 export const authRoutes = [
-    {
-        path: PROFILE_ROUTE,
-        Component: Profile
-    }
-]
+
+];
 
 export const publicRoutes = [
     {
@@ -22,5 +19,9 @@ export const publicRoutes = [
     {
         path: REGISTRATION_ROUTE,
         Component: Auth
+    },
+    {
+        path: '/:login' + PROFILE_ROUTE,
+        Component: Profile
     }
-]
+];
