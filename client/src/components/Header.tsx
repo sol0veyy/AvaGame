@@ -1,8 +1,13 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import ProfileButton from "./Button/ProfileButton";
 import Search from "./Search/Search";
 
-const Header = ({textInput, setText}) => {
+interface IHeader {
+    textInput: string;
+    setText: Dispatch<SetStateAction<string>>;
+}
+
+const Header = ({textInput, setText}: IHeader) => {
     return (
         <nav className="navbar bg-body-tertiary">
             <div className="container-fluid">
@@ -23,6 +28,6 @@ const Header = ({textInput, setText}) => {
             </div>
         </nav>
     );
-}
+};
 
 export default Header;

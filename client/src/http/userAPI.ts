@@ -41,3 +41,13 @@ export const getAllUsers = async () => {
 
     return data;
 };
+
+export const getAllUsersByFilter = async (findText: string) => {
+    try {
+        const {data} = await $authHost.get(`api/user/allByFilter/${findText}`);
+
+        return data.users;
+    } catch (error) {
+        console.log(error);
+    }
+};

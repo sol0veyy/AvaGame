@@ -1,4 +1,4 @@
-const { where } = require("sequelize")
+const { where, Op } = require("sequelize")
 const ApiError = require("../error/ApiError")
 const { UserFollower, User } = require("../models/models")
 
@@ -52,6 +52,34 @@ class FollowerController {
             return res.json({users})
         } catch {
             next(ApiError.badRequest('Ошибка при получении подписок'))
+        }
+    }
+
+    async getSubsByFilter(req, res, next) {
+        const { findText } = req.params;
+        const user = req.user;
+
+        try {
+            const userSubs = await UserFollower.findAll({
+                where: {
+                    followerId: user.id,
+                }
+            });
+
+            const userSubsID = userSubs.map(sub => sub.userId);
+
+            const users = await User.findAll({
+                where: {
+                    id: userSubsID,
+                    login: {
+                        [Op.iLike]: `${findText}%`
+                    }
+                }
+            });
+
+            return res.json({ users });
+        } catch {
+            next(ApiError.badRequest('Ошибка при получении подписок'));
         }
     }
 }

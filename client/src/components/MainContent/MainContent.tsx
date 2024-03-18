@@ -1,10 +1,18 @@
+import React, { useContext } from "react";
 import Avatars from "../Avatars/Avatars";
 import SubBlock from "../SubBlock/SubBlock";
+import { Context } from "../..";
 
-const MainContent = ({textInput}) => {
+interface IMainContent {
+    textInput: string;
+}
+
+const MainContent = ({textInput}: IMainContent) => {
+    const {user} = useContext(Context);
+
     return (
         <div className="d-flex p-5">
-            <SubBlock />
+            {user.isAuth ? <SubBlock /> : ''}
             <Avatars textInput={textInput} />
         </div>
     );

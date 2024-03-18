@@ -9,5 +9,6 @@ router.post('/settings', userController.settings);
 router.get('/auth', authMiddleware, userController.check);
 router.get('/update:userId', userController.update);
 router.get('/all', userController.getAllUsers);
+router.get('/allByFilter/:findText', userController.getAllByFilter);
 
 module.exports = router

@@ -12,6 +12,7 @@ interface IUserBlock {
 const UserBlock = ({ otherUser }: IUserBlock) => {
     const { user } = useContext(Context);
     const isThisUser = user.id === otherUser.id;
+    const [isLoading, setIsLoading] = useState(true);
     const [isFollow, setIsFollow] = useState(false);
 
     const follow_unfollow = () => {
@@ -34,6 +35,7 @@ const UserBlock = ({ otherUser }: IUserBlock) => {
         getIsUserFollow(user.id, otherUser.id)
             .then((isFollow: boolean) => {
                 setIsFollow(isFollow);
+                setIsLoading(false);
             })
             .catch((err) => console.error(err));
     }, []);
@@ -46,16 +48,18 @@ const UserBlock = ({ otherUser }: IUserBlock) => {
                     <span className="user__login">{otherUser.login}</span>
                     <span className="user__colAvatars text-secondary">{otherUser.publications + " " + getNoun(otherUser.publications, "аватарка", "аватарки", "аватарок")}</span>
                 </div>
-                {isThisUser ?
-                    <span className="text-success align-self-center">Это вы!</span>                    
-                    :
+                {isThisUser ? (
+                    <span className="text-success align-self-center">Это вы!</span>       
+                ) : (
                     <button 
                         className="p-0 align-self-center"
                         onClick={follow_unfollow}
                     >
-                        <img src={`/img/${isFollow ? 'delete-user.svg' : 'sub-user.svg'}`} alt="delete user" width={26} height={26} />
+                        {!isLoading ?
+                            <img src={`/img/${isFollow ? 'delete-user.svg' : 'sub-user.svg'}`} alt="delete user" width={26} height={26} /> : ''
+                        }
                     </button>
-                }
+                )}
             </div>
         </div>
     );

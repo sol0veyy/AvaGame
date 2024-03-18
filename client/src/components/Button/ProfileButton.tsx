@@ -20,7 +20,7 @@ export const getNoun = (number: number, one: string, two: string, five: string) 
       return two;
     }
     return five;
-}
+};
 
 interface IProfileButton {
     className?: string;
@@ -39,7 +39,7 @@ const ProfileButton = observer(({ className }: IProfileButton) => {
             setUserImg(user.img);
             setLogin(user.login);
         }
-    }, [user])
+    }, [user]);
 
     return (
         <div className={`${className} col`}>
@@ -64,7 +64,7 @@ const ProfileButton = observer(({ className }: IProfileButton) => {
                 </div>
             }
         </div>
-    )
-})
+    );
+});
 
 export default ProfileButton;

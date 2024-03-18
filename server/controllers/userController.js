@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { User, Subscriber } = require('../models/models')
 const uuid = require('uuid')
 const path = require('path')
+const { Op } = require('sequelize')
 
 
 const generateJwt = (id, img, publications, login, email, role) => {
@@ -102,8 +103,8 @@ class UserController {
     }
 
     async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.img, req.user.publications, req.user.login, req.user.email, req.user.role)
-        return res.json({ token })
+        const token = generateJwt(req.user.id, req.user.img, req.user.publications, req.user.login, req.user.email, req.user.role);
+        return res.json({ token });
     }
 
     async update(req, res) {
@@ -117,6 +118,24 @@ class UserController {
         const users = await User.findAll();
 
         return res.json({ users })
+    }
+
+    async getAllByFilter(req, res, next) {
+        const { findText } = req.params;
+
+        try {
+            const users = await User.findAll({
+                where: {
+                    login: {
+                        [Op.iLike]: `${findText}%`
+                    }
+                }
+            });
+
+            return res.json({ users });
+        } catch {
+            next(ApiError.badRequest('Ошибка при получении пользователей'));
+        }
     }
 }
 

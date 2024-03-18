@@ -1,4 +1,4 @@
-import { $host } from ".";
+import { $authHost, $host } from ".";
 
 export const follow = async (followerId: number, userId: number) => {
     try {
@@ -37,5 +37,15 @@ export const getAllUserSubs = async(followerId: number) => {
         return data.users;
     } catch (err) {
         console.error(err);
+    }
+};
+
+export const getAllUserSubsByFilter = async (findText: string) => {
+    try {
+        const {data} = await $authHost.get(`api/follower/userSubsByFilter/${findText}`);
+
+        return data.users;
+    } catch (error) {
+        console.log(error);
     }
 };
