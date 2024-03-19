@@ -1,8 +1,8 @@
-import { $authHost, $host } from ".";
+import { $authHost, $host } from "..";
 
-export const follow = async (followerId: number, userId: number) => {
+export const follow = async (userId: number) => {
     try {
-        const {data} = await $host.post('api/follower/follow', {followerId, userId});
+        const {data} = await $authHost.post('api/follower/follow', {userId});
 
         return data.follower;
     } catch (err) {
@@ -10,9 +10,9 @@ export const follow = async (followerId: number, userId: number) => {
     }
 };
 
-export const unfollow = async(followerId: number, userId: number) => {
+export const unfollow = async(userId: number) => {
     try {
-        const {data} = await $host.delete(`api/follower/unfollow/${followerId}/${userId}`);
+        const {data} = await $authHost.delete(`api/follower/unfollow/${userId}`);
 
         return data.follower;
     } catch (err) {
@@ -20,9 +20,9 @@ export const unfollow = async(followerId: number, userId: number) => {
     }
 };
 
-export const getIsUserFollow = async(followerId: number, userId: number) => {
+export const getIsUserFollow = async(userId: number) => {
     try {
-        const {data} = await $host.get(`api/follower/isUserFollow/${followerId}/${userId}`);
+        const {data} = await $authHost.get(`api/follower/isUserFollow/${userId}`);
 
         return data.isFollow;
     } catch (err) {

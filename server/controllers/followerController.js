@@ -4,10 +4,11 @@ const { UserFollower, User } = require("../models/models")
 
 class FollowerController {
     async follow(req, res, next) {
-        const { followerId, userId } = req.body
+        const { userId } = req.body
 
         try {
-            const follower = await UserFollower.create({followerId, userId})
+            const user = req.user;
+            const follower = await UserFollower.create({followerId: user.id, userId})
 
             return res.json({follower})
         } catch {
@@ -17,10 +18,11 @@ class FollowerController {
     }
 
     async unfollow(req, res, next) {
-        const { followerId, userId } = req.params
+        const { userId } = req.params
 
         try {
-            const follower = await UserFollower.findOne({where: {followerId, userId}})
+            const user = req.user;
+            const follower = await UserFollower.findOne({where: {followerId: user.id, userId}})
             await follower.destroy()
     
             return res.json({follower})
@@ -29,12 +31,17 @@ class FollowerController {
         }
     }
 
-    async getIsUserFollow(req, res) {
-        const { followerId, userId } = req.params
+    async getIsUserFollow(req, res, next) {
+        const { userId } = req.params;
 
-        const isFollow = await UserFollower.findOne({where: {followerId, userId}})
+        try {
+            const user = req.user;
+            const isFollow = await UserFollower.findOne({where: {followerId: user.id, userId}})
 
-        return res.json({isFollow: Boolean(isFollow)})
+            return res.json({isFollow: Boolean(isFollow)})
+        } catch {
+            next(ApiError.badRequest('Не удалось получить подписку на пользователя'));
+        }
     }
 
     async getAllUserSubs(req, res, next) {

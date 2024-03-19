@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import UserBlock from '../UserBlock/UserBlock';
-import { getAllUserSubs, getAllUserSubsByFilter } from '../../../http/followerAPI';
+import { getAllUserSubs, getAllUserSubsByFilter } from '../../../http/Follower/followerAPI';
 import { IUser } from '../../../store/UserStore';
 import { Context } from '../../..';
 import { ISubBlockContent } from '../SubBlock';

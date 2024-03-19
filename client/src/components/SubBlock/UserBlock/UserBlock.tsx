@@ -1,11 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../..";
-import { follow, getIsUserFollow, unfollow } from "../../../http/followerAPI";
+import { getIsUserFollow } from "../../../http/Follower/followerAPI";
 import { IUser } from "../../../store/UserStore";
 import { getNoun } from "../../Button/ProfileButton";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_ROUTE } from "../../../utils/consts";
+import { follow_unfollow } from "../../../http/Follower/followerFunctions";
 
 interface IUserBlock {
     otherUser: IUser;
@@ -18,24 +19,10 @@ const UserBlock = ({ otherUser }: IUserBlock) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isFollow, setIsFollow] = useState(false);
 
-    const follow_unfollow = () => {
-        if (isFollow) {
-            unfollow(user.id, otherUser.id)
-                .then(() => {
-                    setIsFollow(false);
-                });
-        } else {
-            follow(user.id, otherUser.id)
-                .then(() => {
-                    setIsFollow(true);
-                });
-        }
-    };
-
     useEffect(() => {
         if (isThisUser) return;
 
-        getIsUserFollow(user.id, otherUser.id)
+        getIsUserFollow(otherUser.id)
             .then((isFollow: boolean) => {
                 setIsFollow(isFollow);
                 setIsLoading(false);
@@ -64,7 +51,7 @@ const UserBlock = ({ otherUser }: IUserBlock) => {
                 ) : (
                     <button 
                         className="p-0 align-self-center btn__reset"
-                        onClick={follow_unfollow}
+                        onClick={() => follow_unfollow(isFollow, setIsFollow, otherUser)}
                     >
                         {!isLoading ?
                             <img src={`/img/${isFollow ? 'delete-user.svg' : 'sub-user.svg'}`} alt="delete user" width={26} height={26} /> : ''
