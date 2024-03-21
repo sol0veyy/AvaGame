@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { IAvatar } from '../../store/AvatarStore';
 import { clickDownload } from './functions';
 import Pagination from '../Pagination/Pagination';
+import './avatars.scss';
 
 interface IPropsAvatars {
     textInput?: string;
@@ -29,7 +30,7 @@ const Avatars = observer(({ textInput }: IPropsAvatars) => {
 
     return (
         <>
-            <div className="d-flex gap-4 mx-5">
+            <div className="avatars__block">
                 {
                 (avatars ? [...avatars] : [])
                     .sort((a, b) => b.id - a.id)

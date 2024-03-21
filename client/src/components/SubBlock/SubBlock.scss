@@ -32,3 +32,9 @@
         border-radius: 90px;
     }
 }
+
+@media (max-width: 576px) {
+    .sub__block {
+        display: none !important;
+    }
+}
