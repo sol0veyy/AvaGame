@@ -8,6 +8,7 @@ import { IUser } from "../store/UserStore";
 import { Context } from "..";
 import UserProfile from "../components/Profile/UserProfile/UserProfile";
 import ViewProfile from "../components/Profile/ViewProfile/ViewProfile";
+import Layout from "../components/Layout/Layout";
 
 const Profile = () => {
     const {user} = useContext(Context);
@@ -30,14 +31,16 @@ const Profile = () => {
     }, []);
 
     return (
-        <div className="profile">
-            {!isLoading ? (
-                <>
-                    {user.id === profileUser.id ? <UserProfile /> : <ViewProfile profileUser={profileUser} />}
-                    <UserAvatars profileUser={profileUser} clickDownload={clickDownload} />
-                </>
-            ) : null}
-        </div>
+        <Layout>
+            <div className="profile">
+                {!isLoading ? (
+                    <>
+                        {user.id === profileUser.id ? <UserProfile /> : <ViewProfile profileUser={profileUser} />}
+                        <UserAvatars profileUser={profileUser} clickDownload={clickDownload} />
+                    </>
+                ) : null}
+            </div>
+        </Layout>
     );
 };
 

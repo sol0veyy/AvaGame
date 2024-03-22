@@ -1,4 +1,17 @@
 main {
     display: flex;
     padding: 24px;
+
+    .main__block {
+        width: 100%;
+        margin-left: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        .main__block {
+            margin-left: 0;
+        }
+    }
 }

@@ -16,20 +16,21 @@ const App = observer(() => {
                 user.setUser(data);
                 user.setIsAuth(true);
             })
-            .catch(() => {
+            .catch((err) => {
+                console.error(err);
                 setLoading(false);
             })
             .finally(() => setLoading(false));
     }, [user]);
 
-    if (loading) {
-        return <div>Загрузка...</div>;
-    }
-
     return (
-        <BrowserRouter>
-            <AppRouter />
-        </BrowserRouter>
+        <>
+            {!loading && (
+                <BrowserRouter>
+                    <AppRouter />
+                </BrowserRouter>
+            )}
+        </>
     );
 });
 

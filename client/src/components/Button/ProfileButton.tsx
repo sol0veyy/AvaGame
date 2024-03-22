@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../..";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
 import { observer } from "mobx-react-lite";
@@ -45,9 +45,9 @@ const ProfileButton = observer(({ className }: IProfileButton) => {
         <div className={`${className} col`}>
             {user.isAuth ?
                 <div className="d-flex justify-content-lg-end">
-                    <NavLink to={`/${user.login + PROFILE_ROUTE}`}>
+                    <Link to={`/${user.login + PROFILE_ROUTE}`}>
                         <img className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
-                    </NavLink>
+                    </Link>
                     <div className="d-flex justify-content-around flex-column mx-2">
                         <span>{login}</span>
                         <span className="col__avatars text-white-50">{textColAvatars}</span>
@@ -55,12 +55,12 @@ const ProfileButton = observer(({ className }: IProfileButton) => {
                 </div>
                 :
                 <div className="d-flex gap-2 justify-content-lg-end">
-                    <NavLink to={REGISTRATION_ROUTE}>
+                    <Link to={REGISTRATION_ROUTE}>
                         <button className="btn btn-outline-secondary">Регистрация</button>
-                    </NavLink>
-                    <NavLink to={LOGIN_ROUTE}>
+                    </Link>
+                    <Link to={LOGIN_ROUTE}>
                         <button className="btn btn-primary">Вход</button>
-                    </NavLink>
+                    </Link>
                 </div>
             }
         </div>

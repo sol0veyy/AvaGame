@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import 'https://kit.fontawesome.com/ec79f0a95b.js';
-import Header from '../components/Header';
 import '../css/style.css';
 import MainContent from '../components/MainContent/MainContent';
+import Layout from '../components/Layout/Layout';
 
 const Main = () => {
   const [textInput, setText] = useState('');
 
   return (
-    <div style={{ height: '100vh' }}>
-      <Header textInput={textInput} setText={setText} />
-      <MainContent textInput={textInput} />
-    </div>
+    <Layout>
+      <MainContent textInput={textInput} setText={setText} />
+    </Layout>
   );
 };
 

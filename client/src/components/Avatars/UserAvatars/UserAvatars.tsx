@@ -37,15 +37,9 @@ const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars)
         });
     };
 
-    if (loading) {
-        return (
-            <div>Загрузка...</div>
-        );
-    }
-
     return (
         <>
-            {avatars.getUserAvatars()[0] ? (
+            {!loading && avatars.getUserAvatars()[0] ? (
                 <div className='avatarsBlockProfile'>
                     {avatars.getUserAvatars().map((avatar) => (
                         <Avatar
@@ -62,9 +56,13 @@ const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars)
                     />
                 </div>
             ) : (
-                <h2 className='noAvatars'>
-                    Нет опубликованных аватарок
-                </h2>
+                <>
+                    {!loading && (
+                        <h2 className='noAvatars'>
+                            Нет опубликованных аватарок
+                        </h2>
+                    )}
+                </>
             )}
         </>
     );

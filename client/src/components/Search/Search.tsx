@@ -1,14 +1,15 @@
 import React, { Dispatch, SetStateAction } from "react";
+import './search.scss';
 
 interface ISearch {
     textInput: string;
     setText: Dispatch<SetStateAction<string>>;
-    className: string;
+    className?: string;
 }
 
 const Search = ({textInput, setText, className}: ISearch) => {
     return (
-        <form className={`${className} d-flex col-4`} role="search">
+        <form className={`${className} search`} role="search">
             <input 
                 value={textInput}
                 onChange={event => setText(event.target.value)}
