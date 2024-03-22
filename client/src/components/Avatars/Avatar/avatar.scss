@@ -1,4 +1,10 @@
 .avatarBlock {
+    .heart,
+    .download,
+    .chat {
+        cursor: pointer;
+    }
+
     .delete__block {
         position: absolute;
         z-index: 10;
@@ -10,13 +16,13 @@
         }
     }
 
-    .rating__block {
+    .download__block {
         display: flex;
         justify-content: center;
         align-items: center;
         position: absolute;
         width: 36px;
-        height: 20px;
+        height: 28px;
         top: 0;
         right: 0;
         border-radius: 0 0 0 10px;
@@ -33,10 +39,14 @@
         background-color: #2B3035;
         border-radius: 0 0 10px 10px;
 
-        .heart,
-        .download,
-        .chat {
-            cursor: pointer;
+        .heart__block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            .rating {
+                font-size: 0.9rem;
+            }
         }
     }
 }

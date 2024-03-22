@@ -14,3 +14,9 @@
     width: auto;
     margin-top: 120px;
 }
+
+@media (max-width: 576px) {
+    .avatarsBlockProfile {
+        margin: 0 0 80px;
+    }
+}

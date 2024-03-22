@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../../..';
 import Avatar from '../Avatar/Avatar';
-import styles from './userAvatars.module.css';
+import './userAvatars.scss';
 import ModalAccept from '../../Modal/ModalAccept';
 import { observer } from 'mobx-react-lite';
 import { IAvatar } from '../../../store/AvatarStore';
@@ -46,7 +46,7 @@ const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars)
     return (
         <>
             {avatars.getUserAvatars()[0] ? (
-                <div className={styles.avatarsBlockProfile}>
+                <div className='avatarsBlockProfile'>
                     {avatars.getUserAvatars().map((avatar) => (
                         <Avatar
                             profile={user.id === profileUser.id}
@@ -62,7 +62,7 @@ const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars)
                     />
                 </div>
             ) : (
-                <h2 className={styles.noAvatars}>
+                <h2 className='noAvatars'>
                     Нет опубликованных аватарок
                 </h2>
             )}
