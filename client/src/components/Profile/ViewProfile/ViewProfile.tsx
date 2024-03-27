@@ -1,6 +1,6 @@
 import React from 'react';
-import { IUser } from '../../../store/UserStore';
 import ProfileInfo from './ProfileInfo';
+import { IUser } from '../../../features/users/usersSlice';
 
 export interface IViewProfile {
     profileUser: IUser;

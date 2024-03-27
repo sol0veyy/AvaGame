@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserBlock from '../UserBlock/UserBlock';
 import { getAllUserSubs, getAllUserSubsByFilter } from '../../../http/Follower/followerAPI';
-import { IUser } from '../../../store/UserStore';
-import { Context } from '../../..';
 import { ISubBlockContent } from '../SubBlock';
+import { IUser, selectUser } from '../../../features/users/usersSlice';
+import { useSelector } from 'react-redux';
 
 const AllSubs = ({ findText }: ISubBlockContent) => {
-    const {user} = useContext(Context);
+    const user = useSelector(selectUser);
     const [users, setUsers] = useState<IUser[]>([]);
 
     useEffect(() => {

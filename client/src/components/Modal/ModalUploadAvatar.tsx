@@ -1,11 +1,21 @@
-import React, { useContext } from 'react';
+import React, { SetStateAction, useContext } from 'react';
 import { useEffect, useState } from 'react';
 import { createAvatar } from "../../http/avatarsAPI";
 import Modal from "./Modal";
-import { Context } from '../..';
+import { Context } from '../..';  
+import { useDispatch, useSelector } from 'react-redux';
+import { addPublication, selectUser } from '../../features/users/usersSlice';
 
-const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
-    const {user, avatars} = useContext(Context)
+interface IPropsModalUploadAvatar {
+    modalActive: boolean;
+    setModalActive: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const ModalUploadAvatar = ({ modalActive, setModalActive}: IPropsModalUploadAvatar) => {
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
+    const {avatars} = useContext(Context);
+
     const [imgUrl, setImgUrl] = useState("");
     const [sizeImg, setSizeImg] = useState("");
     const [errorImg, setErrorImg] = useState("");
@@ -18,7 +28,7 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
         setFile(e.target.files[0]);
         setErrorImg("");
         setViewImg(true);
-    }
+    };
 
     useEffect(() => {
         if (file) {
@@ -27,7 +37,7 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
             img.src = URL.createObjectURL(file);
             img.onload = () => {
                 setSizeImg(img.width + "x" + img.height);
-            }
+            };
         }
     }, [file]);
 
@@ -36,7 +46,7 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
         img.src = URL.createObjectURL(file);
         img.onload = () => {
             if (img.width === img.height && file.type === "image/jpeg") {
-                const regular = /#|\s#/
+                const regular = /#|\s#/;
                 const arrTags = tags.split(regular).filter(el => el !== '');
                 const formData = new FormData();
                 formData.append('userId', `${user.id}`);
@@ -45,7 +55,8 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
                 formData.append('tags', JSON.stringify(arrTags));
                 createAvatar(formData, user).then(data => {
                     avatars.setUserAvatars(data);
-                    user.setUser({...user, publications: user.publications + 1});
+                    dispatch(addPublication());
+                    
                     setModalActive(false);
                 });
                 setViewImg(false);
@@ -53,8 +64,8 @@ const ModalUploadAvatar = ({ modalActive, setModalActive}) => {
             } else {
                 setErrorImg("Фото не соответсвует требованиям!");
             }
-        }
-    }
+        };
+    };
 
     return (
         <Modal active={modalActive}>

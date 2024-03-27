@@ -18,6 +18,7 @@
         "react"
     ],
     "rules": {
-        "semi": "warn"
+        "semi": "warn",
+        "indent": ["warn", 4]
     }
 }

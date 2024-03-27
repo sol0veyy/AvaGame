@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Context } from "..";
 import { authRoutes, publicRoutes } from "../routes";
 import { MAIN_ROUTE } from "../utils/consts";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/users/usersSlice";
 
 const AppRouter = () => {
-    const {user} = useContext(Context);
+    const user = useSelector(selectUser);
     
     return (
         <Routes>

@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import './pagination.css';
 
-const PaginationBlock = ({ page, selectedPage, setPage }) => {
+interface IPropsPaginationBlock {
+    page: number;
+    selectedPage: number;
+    setPage: React.Dispatch<SetStateAction<number>>
+}
+
+const PaginationBlock = ({ page, selectedPage, setPage }: IPropsPaginationBlock) => {
     return (
         <div
             // className={selectedPage === page ? styles.blockSelected : styles.block}

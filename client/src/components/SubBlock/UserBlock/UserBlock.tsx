@@ -1,19 +1,19 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../../..";
+import { useEffect, useState } from "react";
 import { getIsUserFollow } from "../../../http/Follower/followerAPI";
-import { IUser } from "../../../store/UserStore";
 import { getNoun } from "../../Button/ProfileButton";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_ROUTE } from "../../../utils/consts";
 import { follow_unfollow } from "../../../http/Follower/followerFunctions";
+import { useSelector } from "react-redux";
+import { IUser, selectUser } from "../../../features/users/usersSlice";
 
 interface IUserBlock {
     otherUser: IUser;
 }
 
 const UserBlock = ({ otherUser }: IUserBlock) => {
-    const { user } = useContext(Context);
+    const user = useSelector(selectUser);
     const navigate = useNavigate();
     const isThisUser = user.id === otherUser.id;
     const [isLoading, setIsLoading] = useState(true);

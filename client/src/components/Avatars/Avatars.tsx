@@ -32,15 +32,15 @@ const Avatars = observer(({ textInput }: IPropsAvatars) => {
         <>
             <div className="avatars__block">
                 {
-                (avatars ? [...avatars] : [])
-                    .sort((a, b) => b.id - a.id)
-                    .map((avatar) => (
-                        <Avatar
-                            clickDownload={clickDownload}
-                            avatar={avatar}
-                            key={avatar.id}
-                        />
-                    ))}
+                    (avatars ? [...avatars] : [])
+                        .sort((a, b) => b.id - a.id)
+                        .map((avatar) => (
+                            <Avatar
+                                clickDownload={clickDownload}
+                                avatar={avatar}
+                                key={avatar.id}
+                            />
+                        ))}
             </div>
             {pages.length > 1 ? 
                 <Pagination

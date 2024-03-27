@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./avatar.scss";
-import { Context } from "../../..";
 import { IAvatar } from "../../../store/AvatarStore";
 import { delLike, getLike, setLikes } from "../../../http/avatarsAPI";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/users/usersSlice";
 
 interface IPropsAvatar {
     clickDel?: (avatar: IAvatar) => void;
@@ -12,7 +13,7 @@ interface IPropsAvatar {
 }
 
 const Avatar = ({ clickDel, clickDownload, avatar, profile }: IPropsAvatar) => {
-    const {user} = useContext(Context);
+    const user = useSelector(selectUser);
 
     const [userAvatar, setUserAvatar] = useState(avatar);
     const [onLike, setOnLike] = useState(false);

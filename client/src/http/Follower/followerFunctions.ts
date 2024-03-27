@@ -1,4 +1,4 @@
-import { IUser } from "../../store/UserStore";
+import { IUser } from "../../features/users/usersSlice";
 import { follow, unfollow } from "./followerAPI";
 
 export const follow_unfollow = (isFollow: boolean, setIsFollow: React.Dispatch<React.SetStateAction<boolean>>, user: IUser) => {

@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import '../profile.css';
 import { useNavigate } from 'react-router-dom';
 import { MAIN_ROUTE } from '../../../utils/consts';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../../..';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    logout,
+    selectUser
+} from '../../../features/users/usersSlice';
 
 interface IPropsProfileInfo {
     setUploadActive: (active: boolean) => void;
@@ -12,10 +16,11 @@ interface IPropsProfileInfo {
 
 const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProfileInfo) => {
     const navigate = useNavigate();
-    const {user} = useContext(Context);
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
 
-    const logOut = () => {
-        user.logOut();
+    const handleLogout = () => {
+        dispatch(logout());
         localStorage.removeItem('token');
         navigate(MAIN_ROUTE);
     };
@@ -52,7 +57,7 @@ const ProfileInfo = observer(({ setUploadActive, setSettingsActive }: IPropsProf
                 </button>
                 <button
                     className="w-75 btn btn-outline-danger"
-                    onClick={() => logOut()}
+                    onClick={handleLogout}
                 >
                     Выйти с аккаунта
                 </button>

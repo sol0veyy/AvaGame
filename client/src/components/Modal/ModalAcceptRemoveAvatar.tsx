@@ -4,6 +4,8 @@ import './modal.css';
 import { deleteAvatar } from '../../http/avatarsAPI';
 import { useContext } from 'react';
 import { Context } from '../..';
+import { useDispatch, useSelector } from 'react-redux';
+import { removePublication, selectUser } from '../../features/users/usersSlice';
 
 interface IModalAccept {
     modalAccept: {
@@ -16,14 +18,17 @@ interface IModalAccept {
     }>>;
 }
 
-const ModalAccept = ({modalAccept, setModalAccept}: IModalAccept) => {
-    const {user, avatars} = useContext(Context);
+const ModalAcceptRemoveAvatar = ({modalAccept, setModalAccept}: IModalAccept) => {
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
+    
+    const {avatars} = useContext(Context);
 
     const delAvatar = async (avatar) => {
         deleteAvatar(avatar.id, user.id)
             .then((data) => {
                 avatars.setUserAvatars([...data]);
-                user.setUser({...user, publications: user.publications - 1});
+                dispatch(removePublication());
                 
                 setModalAccept({...modalAccept, active: false});
             })
@@ -45,4 +50,4 @@ const ModalAccept = ({modalAccept, setModalAccept}: IModalAccept) => {
     );
 };
 
-export default ModalAccept;
+export default ModalAcceptRemoveAvatar;

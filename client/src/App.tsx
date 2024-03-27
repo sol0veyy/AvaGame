@@ -1,27 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './components/AppRouter';
 import { observer } from 'mobx-react-lite';
-import { Context } from '.';
 import { check } from './http/userAPI';
-import { IUser } from './store/UserStore';
+import { useDispatch } from 'react-redux';
+import { IUser, setUser } from './features/users/usersSlice';
 
 const App = observer(() => {
-    const { user } = useContext(Context);
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         check()
             .then((data: IUser) => {
-                user.setUser(data);
-                user.setIsAuth(true);
+                dispatch(setUser(data));
             })
-            .catch((err) => {
-                console.error(err);
-                setLoading(false);
-            })
+            .catch(() => setLoading(false))
             .finally(() => setLoading(false));
-    }, [user]);
+    }, []);
 
     return (
         <>

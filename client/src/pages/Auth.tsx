@@ -1,48 +1,52 @@
-import React, { useContext, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
-import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts"
-import "../css/reg-auth.css"
+import React, { useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
+import "../css/reg-auth.css";
 import { loginIn, registration } from "../http/userAPI";
-import { Context } from "..";
-import { observer } from "mobx-react-lite"
+import { observer } from "mobx-react-lite";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/users/usersSlice";
 
 const Auth = observer(() => {
-    const { user } = useContext(Context)
-    const location = useLocation()
-    const navigate = useNavigate()
-    const isLogin = location.pathname === LOGIN_ROUTE
-    const [login, setLogin] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const dispatch = useDispatch();
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isLogin = location.pathname === LOGIN_ROUTE;
+    const [login, setLogin] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [passView, setPassView] = useState(false);
     const [typePass, setTypePass] = useState("password");
 
-    const click = async () => {
+    const click = () => {
         try {
             if (isLogin) {
-                await loginIn(login, password);
+                loginIn(login, password).then(data => {
+                    dispatch(setUser({...data, isAuth: true}));
+                });
             } else {
-                await registration(login, email, password);
+                registration(login, email, password).then(data => {
+                    dispatch(setUser({...data, isAuth: true}));
+                });
             }
             setError('');
-            user.setIsAuth(true)
-            navigate(MAIN_ROUTE)
-            window.location.reload();
+            navigate(MAIN_ROUTE);
         } catch (e) {
             setError(e.response.data.message);
         }
-    }
+    };
 
     const correctInput = (e) => {
         if (e.key === ' ') {
             e.preventDefault();
         }
-    }
+    };
 
     const clearError = () => {
         setError('');
-    }
+    };
 
     const passOnView = () => {
         if (passView) {
@@ -52,7 +56,7 @@ const Auth = observer(() => {
             setPassView(true);
             setTypePass("text");
         }
-    }
+    };
 
     return (
         <div className="main position-relative">
@@ -61,14 +65,14 @@ const Auth = observer(() => {
                 <form className="row g-3 mb-4">
                     <div className="col-12">
                         <input
-                                required
-                                type="text"
-                                className="form-control"
-                                name="login"
-                                placeholder="Логин"
-                                value={login}
-                                onChange={e => setLogin(e.target.value)}
-                                onKeyDown={e => correctInput(e)}
+                            required
+                            type="text"
+                            className="form-control"
+                            name="login"
+                            placeholder="Логин"
+                            value={login}
+                            onChange={e => setLogin(e.target.value)}
+                            onKeyDown={e => correctInput(e)}
                         />
                     </div>
                     {!isLogin ?
@@ -108,11 +112,9 @@ const Auth = observer(() => {
                         ''
                     }
                     <div className="col-4">
-                        <NavLink to={MAIN_ROUTE}>
-                            <a className="form-control btn btn-outline-secondary">
-                                Главная
-                            </a>
-                        </NavLink>
+                        <Link to={MAIN_ROUTE} className="form-control btn btn-outline-secondary">
+                            Главная
+                        </Link>
                     </div>
                     <div className="col-8">
                         <input
@@ -134,7 +136,7 @@ const Auth = observer(() => {
                 }
             </div>
         </div>
-    )
+    );
 });
 
 export default Auth;

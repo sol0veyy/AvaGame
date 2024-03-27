@@ -5,13 +5,13 @@ import MainContent from '../components/MainContent/MainContent';
 import Layout from '../components/Layout/Layout';
 
 const Main = () => {
-  const [textInput, setText] = useState('');
+    const [textInput, setText] = useState('');
 
-  return (
-    <Layout>
-      <MainContent textInput={textInput} setText={setText} />
-    </Layout>
-  );
+    return (
+        <Layout>
+            <MainContent textInput={textInput} setText={setText} />
+        </Layout>
+    );
 };
 
 export default Main;

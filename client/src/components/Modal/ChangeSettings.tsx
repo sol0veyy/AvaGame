@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from "./Modal";
 import { changeSettings } from '../../http/userAPI';
-import { Context } from '../..';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/users/usersSlice';
 
 interface IChangeSettings {
     modalActive: boolean;
@@ -9,7 +10,7 @@ interface IChangeSettings {
 }
 
 const ChangeSettings = ({ modalActive, setModalActive }: IChangeSettings) => {
-    const {user} = useContext(Context);
+    const user = useSelector(selectUser);
  
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");

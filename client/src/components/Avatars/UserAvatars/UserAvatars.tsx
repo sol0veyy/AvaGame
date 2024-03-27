@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../../..';
 import Avatar from '../Avatar/Avatar';
 import './userAvatars.scss';
-import ModalAccept from '../../Modal/ModalAccept';
 import { observer } from 'mobx-react-lite';
 import { IAvatar } from '../../../store/AvatarStore';
 import { getUserAvatars } from '../../../http/avatarsAPI';
-import { IUser } from '../../../store/UserStore';
+import ModalAcceptRemoveAvatar from '../../Modal/ModalAcceptRemoveAvatar';
+import { useSelector } from 'react-redux';
+import { IUser, selectUser } from '../../../features/users/usersSlice';
 
 interface IPropsUserAvatars {
     profileUser: IUser;
@@ -14,7 +15,8 @@ interface IPropsUserAvatars {
 }
 
 const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars) => {
-    const { user, avatars } = useContext(Context);
+    const user = useSelector(selectUser);
+    const { avatars } = useContext(Context);
     const [loading, setLoading] = useState(true);
     const [modalAccept, setModalAccept] = useState({
         active: false,
@@ -50,7 +52,7 @@ const UserAvatars = observer(({ profileUser, clickDownload }: IPropsUserAvatars)
                             key={avatar.id}
                         />
                     ))}
-                    <ModalAccept
+                    <ModalAcceptRemoveAvatar
                         modalAccept={modalAccept}
                         setModalAccept={setModalAccept}
                     />

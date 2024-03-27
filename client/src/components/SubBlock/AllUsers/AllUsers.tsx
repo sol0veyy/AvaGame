@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import UserBlock from '../UserBlock/UserBlock';
 import { getAllUsers, getAllUsersByFilter } from '../../../http/userAPI';
-import { IUser } from '../../../store/UserStore';
 import { ISubBlockContent } from '../SubBlock';
+import { IUser } from '../../../features/users/usersSlice';
 
 const AllUsers = ({ findText }: ISubBlockContent) => {
     const [users, setUsers] = useState<IUser[]>([]);

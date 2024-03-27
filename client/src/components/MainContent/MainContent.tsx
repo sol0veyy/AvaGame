@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import Avatars from "../Avatars/Avatars";
 import SubBlock from "../SubBlock/SubBlock";
-import { Context } from "../..";
 import './mainContent.scss';
 import Search from "../Search/Search";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/users/usersSlice";
 
 interface IMainContent {
     textInput: string;
@@ -11,11 +12,11 @@ interface IMainContent {
 }
 
 const MainContent = ({textInput, setText}: IMainContent) => {
-    const {user} = useContext(Context);
+    const user = useSelector(selectUser);
 
     return (
         <main>
-            {user.isAuth ? <SubBlock /> : ''}
+            {user.isAuth && <SubBlock />}
             <div className="main__block">
                 <Search textInput={textInput} setText={setText} />
                 <Avatars textInput={textInput} />

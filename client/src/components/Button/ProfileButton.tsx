@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../..";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
-import { observer } from "mobx-react-lite";
 
+import React from "react";
 import "./profileButton.scss";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/users/usersSlice";
 
 export const getNoun = (number: number, one: string, two: string, five: string) => {
     let n = Math.abs(number);
     n %= 100;
     if (n >= 5 && n <= 20) {
-      return five;
+        return five;
     }
     n %= 10;
     if (n === 1) {
-      return one;
+        return one;
     }
     if (n >= 2 && n <= 4) {
-      return two;
+        return two;
     }
     return five;
 };
@@ -26,31 +26,19 @@ interface IProfileButton {
     className?: string;
 }
 
-const ProfileButton = observer(({ className }: IProfileButton) => {
-    const { user } = useContext(Context);
- 
-    const [userImg, setUserImg] = useState('');
-    const [login, setLogin] = useState('');
-    const [textColAvatars, setTextColAvatars] = useState('');
-
-    useEffect(() => {
-        if (user.isAuth) {
-            setTextColAvatars(user.publications + " " + getNoun(user.publications, "аватарка", "аватарки", "аватарок"));
-            setUserImg(user.img);
-            setLogin(user.login);
-        }
-    }, [user]);
+const ProfileButton = ({ className }: IProfileButton) => {
+    const user = useSelector(selectUser);
 
     return (
         <div className={`${className} col`}>
             {user.isAuth ?
                 <div className="d-flex justify-content-lg-end">
                     <Link to={`/${user.login + PROFILE_ROUTE}`}>
-                        <img className="rounded-circle" width={50} src={userImg ? process.env.REACT_APP_API_URL + userImg : "img/nonAvatar.jpg"} alt="profile" />
+                        <img className="rounded-circle" width={50} src={user.img ? process.env.REACT_APP_API_URL + user.img : "img/nonAvatar.jpg"} alt="profile" />
                     </Link>
                     <div className="d-flex justify-content-around flex-column mx-2">
-                        <span>{login}</span>
-                        <span className="col__avatars text-white-50">{textColAvatars}</span>
+                        <span>{user.login}</span>
+                        <span className="col__avatars text-white-50">{user.publications} {getNoun(user.publications, "аватарка", "аватарки", "аватарок")}</span>
                     </div>
                 </div>
                 :
@@ -65,6 +53,6 @@ const ProfileButton = observer(({ className }: IProfileButton) => {
             }
         </div>
     );
-});
+};
 
 export default ProfileButton;
